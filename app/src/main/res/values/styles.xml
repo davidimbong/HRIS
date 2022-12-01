@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Button.theme" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">#007AFF</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.App.rounded" parent="">
+        <item name="cornerSize">3%</item>
+    </style>
+</resources>
