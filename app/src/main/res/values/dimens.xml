@@ -5,6 +5,8 @@
     <dimen name="layout_double_margin">24dp</dimen>
     <dimen name="layout_padding">16dp</dimen>
     <dimen name="layout_double_padding">32dp</dimen>
+    <dimen name="layout_profile_initials_margin">4dp</dimen>
+    <dimen name="layout_profile_padding">40dp</dimen>
     <dimen name="text_padding">8dp</dimen>
     <dimen name="views_margin">8dp</dimen>
     <dimen name="small_margin">2dp</dimen>
