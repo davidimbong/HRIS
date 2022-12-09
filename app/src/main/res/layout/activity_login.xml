@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/layout_margin"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
         android:src="@drawable/logo_removebg_preview"
         app:layout_constraintBottom_toTopOf="@+id/txtUserID"
         app:layout_constraintEnd_toEndOf="parent"

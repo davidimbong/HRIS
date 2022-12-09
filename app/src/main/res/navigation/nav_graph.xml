@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.hris.ui.fragments.ProfileFragment"
+        android:name="com.example.hris.ui.profile.ProfileFragment"
         android:label="HRIS">
 
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/updateProfileFragment"
-        android:name="com.example.hris.ui.fragments.UpdateProfileFragment"
+        android:name="com.example.hris.ui.profile.UpdateProfileFragment"
         android:label="HRIS">
 
     </fragment>
