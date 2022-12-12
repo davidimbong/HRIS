@@ -7,16 +7,13 @@ import com.example.hris.model.User
 @Dao
 interface HrisDao {
 
-    @Query("SELECT * from user_login")
-    fun getLocations(): LiveData<User>
-
-    @Query("SELECT * from user_login WHERE userID = :userID")
-    fun getLocation(userID: String): User
+    @Query("SELECT * from profile_data")
+    fun getProfile(): LiveData<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLogins(locations: User)
+    fun insertProfile(locations: User)
 
-    @Query("DELETE from user_login")
+    @Query("DELETE from profile_data")
     fun deleteAll()
 }
 

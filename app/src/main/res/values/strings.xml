@@ -45,4 +45,7 @@
     <string name="clients">Clients</string>
     <string name="leaves">Leaves</string>
     <string name="time_logs">Time Logs</string>
+    <string name="apiCallLoading"> Retrieving data from the server </string>
+
+    <string name="updateProfileSuccess">You have successfully updated your profile!</string>
 </resources>

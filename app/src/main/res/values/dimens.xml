@@ -12,6 +12,7 @@
     <dimen name="small_margin">2dp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="profile_name_text_size">20sp</dimen>
+    <dimen name="success_text_size">20sp</dimen>
     <dimen name="header_text_size">12sp</dimen>
     <dimen name="button_height">50dp</dimen>
     <dimen name="time_text_size">20sp</dimen>

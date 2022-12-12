@@ -29,10 +29,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/txtInitials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                android:text="DI"
                 android:textSize="@dimen/profile_name_text_size"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -55,7 +55,6 @@
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="David Maxwell Jai Dotillos Imbong"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/profile_name_text_size"
@@ -73,7 +72,6 @@
                 android:id="@+id/txtIdNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2022290"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
@@ -90,7 +88,6 @@
                 android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="davi*****@gmail.com"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
@@ -107,7 +104,6 @@
                 android:id="@+id/txtMobileNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+63 915 *** 0699"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
