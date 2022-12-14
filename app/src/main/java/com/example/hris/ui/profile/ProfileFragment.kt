@@ -32,29 +32,13 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.userData.observe(viewLifecycleOwner) {
+            val userProfile = viewModel.getProfile()
             binding.apply {
-                val name =
-                    "${it.firstName.uppercase()} " +
-                            if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
-                            else "" +
-                                    it.lastName.uppercase()
-
-                name.plus("${it.firstName.uppercase()} ")
-                if (!it.middleName.isNullOrEmpty())
-                    name.plus("${it.middleName.uppercase()} ")
-                name.plus(it.lastName.uppercase())
-
-                val initials = "${it.firstName.first()}${it.lastName.first()}"
-
-                val phoneNumber = it.mobileNumber.convertToPhone().hidePhoneNumber()
-
-                val emailAddress = it.emailAddress.hideEmail()
-
-                txtName.text = name
-                txtInitials.text = initials
-                txtIdNumber.text = it.idNumber
-                txtEmail.text = emailAddress
-                txtMobileNumber.text = phoneNumber
+                txtName.text = userProfile.name
+                txtInitials.text = userProfile.initials
+                txtIdNumber.text = userProfile.idNumber
+                txtEmail.text = userProfile.emailAddress
+                txtMobileNumber.text = userProfile.mobileNumber
             }
         }
 
