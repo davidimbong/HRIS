@@ -2,6 +2,7 @@ package com.example.hris.ui.profile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.hris.convertToLandline
 import com.example.hris.convertToPhone
 import com.example.hris.hideEmail
@@ -17,9 +18,10 @@ class ProfileViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val userData = hrisRepository.profileData
+    private val userData = hrisRepository.profileData
+    val userProfile = MutableLiveData<Profile>()
 
-    fun getProfile(): Profile {
+    fun getProfile() {
         val initials = "${userData.value!!.firstName.first()}${userData.value!!.lastName.first()}"
         var name = ""
         userData.value?.apply {
@@ -32,6 +34,6 @@ class ProfileViewModel @Inject constructor(
         val email = userData.value!!.emailAddress.hideEmail()
         val phoneNumber = userData.value!!.mobileNumber.convertToPhone().hidePhoneNumber()
 
-        return Profile(initials, name, idNumber, email, phoneNumber)
+        userProfile.value = Profile(initials, name, idNumber, email, phoneNumber)
     }
 }

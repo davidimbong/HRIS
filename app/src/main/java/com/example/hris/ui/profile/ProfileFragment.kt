@@ -31,8 +31,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.userData.observe(viewLifecycleOwner) {
-            val userProfile = viewModel.getProfile()
+        viewModel.getProfile()
+        viewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             binding.apply {
                 txtName.text = userProfile.name
                 txtInitials.text = userProfile.initials

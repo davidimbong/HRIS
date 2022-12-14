@@ -30,3 +30,11 @@ data class User constructor(
     val mobileNumber: String,
     val landline: String?
 )
+
+data class Profile(
+    val initials: String,
+    val name: String,
+    val idNumber: String,
+    val emailAddress: String,
+    val mobileNumber: String,
+)
