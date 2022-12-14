@@ -31,14 +31,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProfile()
-        viewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
+        viewModel.userProfile.observe(viewLifecycleOwner) {
             binding.apply {
-                txtName.text = userProfile.name
-                txtInitials.text = userProfile.initials
-                txtIdNumber.text = userProfile.idNumber
-                txtEmail.text = userProfile.emailAddress
-                txtMobileNumber.text = userProfile.mobileNumber
+                txtName.text = it.name
+                txtInitials.text = it.initials
+                txtIdNumber.text = it.idNumber
+                txtEmail.text = it.emailAddress
+                txtMobileNumber.text = it.mobileNumber
             }
         }
 

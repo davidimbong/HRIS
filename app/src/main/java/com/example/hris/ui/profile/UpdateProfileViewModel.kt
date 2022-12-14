@@ -10,7 +10,6 @@ import com.example.hris.repository.HrisRepository
 import com.example.hris.ui.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.http.Field
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,7 +54,7 @@ class UpdateProfileViewModel @Inject constructor(
         )
 
         if (call.status == "0") {
-            hrisRepository.refreshRepository(
+            hrisRepository.refreshProfile(
                 User(
                     userID,
                     idNumber,
@@ -67,10 +66,8 @@ class UpdateProfileViewModel @Inject constructor(
                     landline
                 )
             )
-
-            message.value = call.message
         } else {
-            loadingDialogState.value = DialogState.ERROR
+            message.value = call.message
         }
     }
 }

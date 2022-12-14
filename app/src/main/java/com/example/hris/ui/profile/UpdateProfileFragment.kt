@@ -11,12 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
-import com.example.hris.convertToLocalPhone
 import com.example.hris.convertToPhone
 import com.example.hris.databinding.FragmentUpdateProfileBinding
+import com.example.hris.ui.CustomDialogFragment
 import com.example.hris.ui.DialogState
 import com.example.hris.ui.FragmentType
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpdateProfileFragment : Fragment() {
@@ -24,13 +25,16 @@ class UpdateProfileFragment : Fragment() {
     private lateinit var binding: FragmentUpdateProfileBinding
     private val viewModel: UpdateProfileViewModel by viewModels()
 
-    private val loadingDialog: Dialog by lazy {
-        Dialog(requireContext()).apply {
-            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            this.setCancelable(false)
-            this.setContentView(R.layout.api_calling_dialog)
-        }
-    }
+    @Inject
+    lateinit var loadingDialog: CustomDialogFragment
+
+//    private val loadingDialog: Dialog by lazy {
+//        Dialog(requireContext()).apply {
+//            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            this.setCancelable(false)
+//            this.setContentView(R.layout.api_calling_dialog)
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,31 +84,11 @@ class UpdateProfileFragment : Fragment() {
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner){
-            apiCalling(it)
+            loadingDialog.apiCalling(it, childFragmentManager)
         }
-    }
 
-    private fun apiCalling(state: DialogState) {
-        when (state) {
-            DialogState.SHOW -> {
-                loadingDialog.show()
-            }
-
-            DialogState.HIDE -> {
-                loadingDialog.dismiss()
-                val action =
-                    UpdateProfileFragmentDirections.actionUpdateProfileFragmentToSuccessFragment(
-                        FragmentType.PROFILE
-                    )
-                findNavController().navigate(action)
-            }
-
-            DialogState.ERROR -> {
-                loadingDialog.dismiss()
-                viewModel.message.observe(viewLifecycleOwner) {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                }
-            }
+        viewModel.message.observe(viewLifecycleOwner){
+            loadingDialog.apiToast(it)
         }
     }
 }

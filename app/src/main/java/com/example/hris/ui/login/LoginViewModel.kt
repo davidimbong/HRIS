@@ -26,7 +26,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             loadingDialogState.value = DialogState.SHOW
             getLoginDetails(username, password)
-            loadingDialogState.value = DialogState.HIDE
         }
     }
 
@@ -38,10 +37,10 @@ class LoginViewModel @Inject constructor(
 
         if (call.status.equals("0")) {
             userData.value = call.user!!
-            hrisRepository.refreshRepository(userData.value!!)
+            hrisRepository.refreshProfile(userData.value!!)
+            loadingDialogState.value = DialogState.HIDE
         } else {
-            call.message
-            loadingDialogState.value = DialogState.ERROR
+            message.value = call.message!!
         }
     }
 }

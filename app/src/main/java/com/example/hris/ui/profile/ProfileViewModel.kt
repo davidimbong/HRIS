@@ -2,6 +2,7 @@ package com.example.hris.ui.profile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.hris.convertToLandline
 import com.example.hris.convertToPhone
@@ -19,21 +20,22 @@ class ProfileViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     private val userData = hrisRepository.profileData
-    val userProfile = MutableLiveData<Profile>()
+    val userProfile = MediatorLiveData<Profile>()
 
-    fun getProfile() {
-        val initials = "${userData.value!!.firstName.first()}${userData.value!!.lastName.first()}"
-        var name = ""
-        userData.value?.apply {
-            name = "${this.firstName.uppercase()} " +
-                    if (!this.middleName.isNullOrEmpty()) "${this.middleName.uppercase()} "
-                    else "" +
-                            this.lastName.uppercase()
+
+    init {
+        userProfile.addSource(userData){
+
+            val initials = "${it.firstName.first()}${it.lastName.first()}"
+            val name = "${it.firstName.uppercase()} " +
+                        if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
+                        else "" +
+                                it.lastName.uppercase()
+            val idNumber = it.idNumber
+            val email = it.emailAddress.hideEmail()
+            val phoneNumber = it.mobileNumber.convertToPhone().hidePhoneNumber()
+
+            userProfile.value = Profile(initials, name, idNumber, email, phoneNumber)
         }
-        val idNumber = userData.value!!.idNumber
-        val email = userData.value!!.emailAddress.hideEmail()
-        val phoneNumber = userData.value!!.mobileNumber.convertToPhone().hidePhoneNumber()
-
-        userProfile.value = Profile(initials, name, idNumber, email, phoneNumber)
     }
 }

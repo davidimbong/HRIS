@@ -9,9 +9,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hris.R
 import com.example.hris.databinding.ActivityLoginBinding
+import com.example.hris.ui.CustomDialogFragment
 import com.example.hris.ui.DialogState
 import com.example.hris.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -19,13 +21,8 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
 
-    private val loadingDialog: Dialog by lazy {
-        Dialog(this).apply {
-            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            this.setCancelable(false)
-            this.setContentView(R.layout.api_calling_dialog)
-        }
-    }
+    @Inject
+    lateinit var loadingDialog: CustomDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,25 +41,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.loadingDialogState.observe(this){
-            apiCalling(it)
+            loadingDialog.apiCalling(it, supportFragmentManager)
         }
-    }
 
-    private fun apiCalling(state: DialogState) {
-        when (state) {
-            DialogState.SHOW -> {
-                loadingDialog.show()
-            }
-
-            DialogState.HIDE -> {
-                loadingDialog.dismiss()
-            }
-
-            DialogState.ERROR -> {
-                viewModel.message.observe(this){
-                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                }
-            }
+        viewModel.message.observe(this){
+            loadingDialog.apiToast(it)
         }
     }
 }
