@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/layout_padding"
-    tools:context=".ui.fragments.AddTimeLogSuccessFragment">
+    tools:context=".ui.SuccessFragment">
 
     <TextView
         android:id="@+id/txtSuccess"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/you_have_successfully_save_the_following_details"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size"
+        android:layout_marginTop="@dimen/layout_double_margin"
+        android:layout_marginHorizontal="@dimen/layout_margin"
+        android:textSize="@dimen/success_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/successDataLayout"

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.hris.ui.fragments.ProfileFragment"
+        android:name="com.example.hris.ui.profile.ProfileFragment"
         android:label="HRIS">
 
         <action
@@ -16,30 +16,41 @@
 
     <fragment
         android:id="@+id/updateProfileFragment"
-        android:name="com.example.hris.ui.fragments.UpdateProfileFragment"
+        android:name="com.example.hris.ui.profile.UpdateProfileFragment"
         android:label="HRIS">
 
+        <action
+            android:id="@+id/action_updateProfileFragment_to_successFragment"
+            app:destination="@id/successFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/leavesFragment"
-        android:name="com.example.hris.ui.fragments.LeavesFragment"
+        android:name="com.example.hris.ui.leaves.LeavesFragment"
         android:label="HRIS">
 
     </fragment>
 
     <fragment
         android:id="@+id/timeLogsFragment"
-        android:name="com.example.hris.ui.fragments.TimeLogsFragment"
+        android:name="com.example.hris.ui.timelog.TimeLogsFragment"
         android:label="HRIS">
 
     </fragment>
 
     <fragment
         android:id="@+id/successFragment"
-        android:name="com.example.hris.ui.fragments.AddTimeLogSuccessFragment"
+        android:name="com.example.hris.ui.SuccessFragment"
         android:label="HRIS">
 
+        <action
+            android:id="@+id/action_successFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="fragmentType"
+            app:argType="com.example.hris.ui.FragmentType" />
     </fragment>
 
 
