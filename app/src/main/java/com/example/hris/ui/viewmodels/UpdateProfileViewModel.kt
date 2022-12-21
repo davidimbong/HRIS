@@ -1,4 +1,4 @@
-package com.example.hris.ui.profile
+package com.example.hris.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -21,7 +21,6 @@ class UpdateProfileViewModel @Inject constructor(
     val userData = hrisRepository.profileData
     val loadingDialogState = MutableLiveData<DialogState>()
     val message = MutableLiveData<String>()
-
 
     fun updateProfile(
         firstName: String,

@@ -9,26 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/views_margin"
+        android:paddingHorizontal="@dimen/layout_margin"
+        android:paddingVertical="@dimen/layout_margin"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.3"
             android:text="@string/date"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/timeIn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/views_margin"
             android:layout_weight="1"
             android:text="@string/in"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/timeOut"
@@ -37,7 +41,8 @@
             android:layout_weight="1"
             android:text="@string/out"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <View

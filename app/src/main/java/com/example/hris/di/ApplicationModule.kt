@@ -2,7 +2,7 @@ package com.example.hris.di
 
 import android.content.Context
 import com.example.hris.ui.BaseApplication
-import com.example.hris.ui.CustomDialogFragment
+import com.example.hris.ui.fragments.CustomDialogFragment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

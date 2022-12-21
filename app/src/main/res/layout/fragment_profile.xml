@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/layout_padding"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.fragments.profile.ProfileFragment">
+
+    <include
+        android:id="@+id/profileToolBar"
+        layout="@layout/profile_toolbar_layout"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/toolbar_margin"
         android:background="@drawable/view_background"
-        android:paddingEnd="@dimen/layout_profile_padding"
         android:paddingVertical="@dimen/layout_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/profileToolBar">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="@dimen/layout_double_padding"
             android:layout_height="@dimen/layout_double_padding"
             app:cardBackgroundColor="@android:color/darker_gray"
-            android:layout_marginStart="@dimen/layout_profile_initials_margin"
             app:cardCornerRadius="500dp"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -32,11 +36,11 @@
                 android:id="@+id/txtInitials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textAllCaps="true"
-                android:textSize="@dimen/profile_name_text_size"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
+                android:textSize="@dimen/profile_name_text_size"
+                android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
 
@@ -44,11 +48,11 @@
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/layout_profile_padding"
             android:orientation="vertical"
-            android:layout_marginStart="@dimen/layout_profile_initials_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -77,7 +81,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/views_margin"

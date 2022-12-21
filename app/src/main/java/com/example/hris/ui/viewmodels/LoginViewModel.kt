@@ -1,4 +1,4 @@
-package com.example.hris.ui.login
+package com.example.hris.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -35,7 +35,7 @@ class LoginViewModel @Inject constructor(
             password
         )
 
-        if (call.status.equals("0")) {
+        if (call.status == "0") {
             userData.value = call.user!!
             hrisRepository.refreshProfile(userData.value!!)
             loadingDialogState.value = DialogState.HIDE

@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/timeLogsFragment">
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.hris.ui.profile.ProfileFragment"
+        android:name="com.example.hris.ui.fragments.profile.ProfileFragment"
         android:label="HRIS">
 
         <action
@@ -16,42 +16,91 @@
 
     <fragment
         android:id="@+id/updateProfileFragment"
-        android:name="com.example.hris.ui.profile.UpdateProfileFragment"
+        android:name="com.example.hris.ui.fragments.profile.UpdateProfileFragment"
         android:label="HRIS">
 
         <action
-            android:id="@+id/action_updateProfileFragment_to_successFragment"
-            app:destination="@id/successFragment" />
+            android:id="@+id/action_updateProfileFragment_to_updateProfileSuccessFragment"
+            app:destination="@id/updateProfileSuccessFragment"
+            app:popUpTo="@id/updateProfileSuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateProfileSuccessFragment"
+        android:name="com.example.hris.ui.fragments.profile.UpdateProfileSuccessFragment"
+        android:label="HRIS">
+
+        <action
+            android:id="@+id/action_updateProfileSuccessFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/leavesFragment"
-        android:name="com.example.hris.ui.leaves.LeavesFragment"
+        android:name="com.example.hris.ui.fragments.leaves.LeavesFragment"
         android:label="HRIS">
 
     </fragment>
 
     <fragment
         android:id="@+id/timeLogsFragment"
-        android:name="com.example.hris.ui.timelog.TimeLogsFragment"
-        android:label="HRIS">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/successFragment"
-        android:name="com.example.hris.ui.SuccessFragment"
+        android:name="com.example.hris.ui.fragments.timelogs.TimeLogsFragment"
         android:label="HRIS">
 
         <action
-            android:id="@+id/action_successFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="false" />
-        <argument
-            android:name="fragmentType"
-            app:argType="com.example.hris.ui.FragmentType" />
+            android:id="@+id/action_timeLogsFragment_to_timeLogsDetailedFragment"
+            app:destination="@id/timeLogsDetailedFragment" />
+        <action
+            android:id="@+id/action_timeLogsFragment_to_addTimeLogsFragment"
+            app:destination="@id/addTimeLogsFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/timeLogsDetailedFragment"
+        android:name="com.example.hris.ui.fragments.timelogs.TimeLogsDetailedFragment"
+        android:label="HRIS">
+        <argument
+            android:name="timeLog"
+            app:argType="com.example.hris.model.TimeLogs" />
+        <action
+            android:id="@+id/action_timeLogsDetailedFragment_to_timeLogsFragment"
+            app:destination="@id/timeLogsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTimeLogsFragment"
+        android:name="com.example.hris.ui.fragments.timelogs.AddTimeLogFragment"
+        android:label="HRIS">
+        <argument
+            android:name="userID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addTimeLogsFragment_to_addTimeLogSuccessFragment"
+            app:destination="@id/addTimeLogSuccessFragment" />
+        <action
+            android:id="@+id/action_addTimeLogsFragment_to_timeLogsFragment"
+            app:destination="@id/timeLogsFragment"
+            app:popUpTo="@id/timeLogsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTimeLogSuccessFragment"
+        android:name="com.example.hris.ui.fragments.timelogs.AddTimelogSuccessFragment"
+        android:label="HRIS">
+        <action
+            android:id="@+id/action_addTimeLogSuccessFragment_to_timeLogsFragment"
+            app:destination="@id/timeLogsFragment"
+            app:popUpTo="@id/timeLogsFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/customDialogFragment"
+        android:name="com.example.hris.ui.fragments.CustomDialogFragment"
+        android:label="HRIS"/>
 
 </navigation>

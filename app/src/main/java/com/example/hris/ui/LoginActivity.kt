@@ -1,17 +1,12 @@
-package com.example.hris.ui.login
+package com.example.hris.ui
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Window
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.hris.R
 import com.example.hris.databinding.ActivityLoginBinding
-import com.example.hris.ui.CustomDialogFragment
-import com.example.hris.ui.DialogState
-import com.example.hris.ui.MainActivity
+import com.example.hris.ui.fragments.CustomDialogFragment
+import com.example.hris.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.userData.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
+            this.finish()
         }
 
         viewModel.loadingDialogState.observe(this){
