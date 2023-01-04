@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.hris.model.TimeLogs
 import com.example.hris.network.HrisApi
 import com.example.hris.repository.HrisRepository
-import com.example.hris.ui.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,20 +19,19 @@ class TimeLogsViewModel @Inject constructor(
 
     val user = hrisRepository.profileData
     val timeLogs = MutableLiveData<List<TimeLogs>>()
-    val loadingDialogState = MutableLiveData<DialogState>()
+    val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
-    fun getTimeLogs(userId: String) {
+    fun getTimeLogs() {
         viewModelScope.launch {
-            loadingDialogState.value = DialogState.SHOW
-            callTimeLogs(userId)
-            loadingDialogState.value = DialogState.HIDE
+            callTimeLogs()
         }
     }
 
-    private suspend fun callTimeLogs(userId: String) {
+    private suspend fun callTimeLogs() {
+        loadingDialogState.value = true
         val call = HrisApi.retrofitService.getTimeLogs(
-            userId
+            hrisRepository.profileData.value!!.userID
         )
 
         if (call.status == "0") {
@@ -42,5 +40,7 @@ class TimeLogsViewModel @Inject constructor(
         } else {
             message.value = call.message!!
         }
+        loadingDialogState.value = false
+
     }
 }

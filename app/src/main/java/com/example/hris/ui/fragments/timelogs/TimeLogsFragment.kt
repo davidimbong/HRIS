@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.hris.R
 import com.example.hris.databinding.FragmentTimeLogsBinding
+import com.example.hris.ui.MainActivity
 import com.example.hris.ui.adapters.TimeLogsListAdapter
-import com.example.hris.ui.fragments.CustomDialogFragment
 import com.example.hris.ui.viewmodels.TimeLogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TimeLogsFragment : Fragment() {
-    @Inject
-    lateinit var loadingDialog: CustomDialogFragment
     private val viewModel: TimeLogsViewModel by viewModels()
     private lateinit var binding: FragmentTimeLogsBinding
 
@@ -32,26 +31,20 @@ class TimeLogsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().actionBar
-
-        var userID = ""
         binding.timelogsToolbar.btnAdd.setOnClickListener {
-            val action =
-                TimeLogsFragmentDirections.actionTimeLogsFragmentToAddTimeLogsFragment(userID)
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_timeLogsFragment_to_addTimeLogsFragment)
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
-            userID = it.userID
-            viewModel.getTimeLogs(userID)
+            viewModel.getTimeLogs()
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            loadingDialog.apiCalling(it, childFragmentManager)
+            (activity as MainActivity).setLoadingDialog(it)
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
-            loadingDialog.apiToast(it)
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
         viewModel.timeLogs.observe(viewLifecycleOwner) {
@@ -65,5 +58,4 @@ class TimeLogsFragment : Fragment() {
             binding.timeLogRecyclerView.adapter = adapter
         }
     }
-
 }

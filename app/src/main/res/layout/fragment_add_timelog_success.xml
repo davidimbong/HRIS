@@ -89,7 +89,7 @@
         android:id="@+id/btnOk"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/layout_margin"
+        android:layout_margin="@dimen/layout_margin"
         android:background="@drawable/button_background"
         android:text="@string/ok"
         android:textSize="@dimen/text_size"

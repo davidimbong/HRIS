@@ -19,7 +19,7 @@ class UpdateProfileViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val userData = hrisRepository.profileData
-    val loadingDialogState = MutableLiveData<DialogState>()
+    val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
     fun updateProfile(
@@ -31,9 +31,7 @@ class UpdateProfileViewModel @Inject constructor(
         landline: String?
     ) {
         viewModelScope.launch {
-            loadingDialogState.value = DialogState.SHOW
             update(firstName, middleName, lastName, emailAddress, mobileNumber, landline)
-            loadingDialogState.value = DialogState.HIDE
         }
     }
 
@@ -45,9 +43,9 @@ class UpdateProfileViewModel @Inject constructor(
         mobileNumber: String,
         landline: String?
     ) {
-
         val userID = userData.value!!.userID
         val idNumber = userData.value!!.idNumber
+        loadingDialogState.value = true
         val call = HrisApi.retrofitService.updateProfile(
             userID, firstName, middleName, lastName, emailAddress, mobileNumber, landline
         )
@@ -68,5 +66,6 @@ class UpdateProfileViewModel @Inject constructor(
         } else {
             message.value = call.message
         }
+        loadingDialogState.value = false
     }
 }

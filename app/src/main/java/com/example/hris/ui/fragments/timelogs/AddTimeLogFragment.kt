@@ -4,25 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.hris.R
 import com.example.hris.databinding.FragmentAddTimeLogBinding
-import com.example.hris.ui.fragments.CustomDialogFragment
+import com.example.hris.ui.MainActivity
 import com.example.hris.ui.viewmodels.AddTimeLogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddTimeLogFragment : Fragment() {
-
-    @Inject
-    lateinit var loadingDialog: CustomDialogFragment
     private val viewModel: AddTimeLogsViewModel by viewModels()
     private lateinit var binding: FragmentAddTimeLogBinding
-    private val args by navArgs<AddTimeLogFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +31,9 @@ class AddTimeLogFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addTimelogsToolbar.btnDone.setOnClickListener {
-            val type = binding.Spinner.selectedItemPosition+1
+            val type = binding.Spinner.selectedItemPosition + 1
 
             viewModel.addTimeLogs(
-                args.userID,
                 type.toString()
             )
         }
@@ -49,11 +43,11 @@ class AddTimeLogFragment : Fragment() {
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            loadingDialog.apiCalling(it, childFragmentManager)
+            (activity as MainActivity).setLoadingDialog(it)
         }
 
         viewModel.callValue.observe(viewLifecycleOwner) {
-            loadingDialog.apiToast(it.message)
+            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             if (it.status == "0") {
                 val action =
                     AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(

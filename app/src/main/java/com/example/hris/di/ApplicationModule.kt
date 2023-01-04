@@ -2,7 +2,6 @@ package com.example.hris.di
 
 import android.content.Context
 import com.example.hris.ui.BaseApplication
-import com.example.hris.ui.fragments.CustomDialogFragment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +16,5 @@ object ApplicationModule {
     @Provides
     fun provideApplication(@ApplicationContext app: Context): BaseApplication {
         return app as BaseApplication
-    }
-
-    @Provides
-    fun provideCustomDialog(): CustomDialogFragment {
-        return CustomDialogFragment()
     }
 }

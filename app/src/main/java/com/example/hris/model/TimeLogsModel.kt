@@ -24,9 +24,3 @@ data class TimeLogs (
     val breakIn: String?,
     val timeOut: String?
 ) : Parcelable
-
-@JsonClass(generateAdapter = true)
-data class AddTimeLogs(
-    val status: String,
-    val message: String
-)

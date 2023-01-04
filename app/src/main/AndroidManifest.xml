@@ -18,6 +18,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
+            android:noHistory="true"
             android:theme="@style/Theme.HRIS">
             <meta-data
                 android:name="android.app.lib_name"

@@ -5,7 +5,9 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hris.R
 import com.example.hris.convertDateMonthDay
 import com.example.hris.convertTime24to12
 import com.example.hris.databinding.TimeLogsListBinding
@@ -19,25 +21,24 @@ class TimeLogsListAdapter(
     class TimeLogsViewHolder(private var binding: TimeLogsListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(timeLogs: TimeLogs) {
             binding.date.text = timeLogs.date.convertDateMonthDay()
             binding.timeIn.apply {
                 if (timeLogs.timeIn.isNullOrEmpty()) {
                     text = "N/A"
-                    setTextColor(Color.parseColor("#880808"))
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
                 } else {
                     text = timeLogs.timeIn.convertTime24to12()
-                    setTextColor(Color.parseColor("#000000"))
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
                 }
             }
             binding.timeOut.apply {
                 if (timeLogs.timeOut.isNullOrEmpty()) {
                     text = "N/A"
-                    setTextColor(Color.parseColor("#880808"))
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
                 } else {
                     text = timeLogs.timeOut.convertTime24to12()
-                    setTextColor(Color.parseColor("#000000"))
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
                 }
             }
         }

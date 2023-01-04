@@ -77,7 +77,6 @@ fun String.hideEmail(): String {
     return sb.toString()
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun String.convertDateMonthDay(): String {
     val list = this.split('/')
     val sb = StringBuilder()

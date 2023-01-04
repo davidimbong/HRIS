@@ -12,12 +12,6 @@ data class ProfileModel(
 )
 
 @JsonClass(generateAdapter = true)
-data class UpdateProfileModel(
-    val status: String,
-    val message: String,
-)
-
-@JsonClass(generateAdapter = true)
 @Entity(tableName = "profile_data")
 data class User constructor(
     @PrimaryKey

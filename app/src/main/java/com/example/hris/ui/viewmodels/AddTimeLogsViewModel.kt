@@ -4,34 +4,35 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.hris.model.AddTimeLogs
+import com.example.hris.model.ResponseModel
 import com.example.hris.network.HrisApi
-import com.example.hris.ui.DialogState
+import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddTimeLogsViewModel @Inject constructor(
+    private val hrisRepository: HrisRepository,
     application: Application
 ) : AndroidViewModel(application) {
 
-    val loadingDialogState = MutableLiveData<DialogState>()
-    val callValue = MutableLiveData<AddTimeLogs>()
+    val loadingDialogState = MutableLiveData<Boolean>()
+    val callValue = MutableLiveData<ResponseModel>()
 
-    fun addTimeLogs(userId: String, type: String) {
+    fun addTimeLogs(type: String) {
         viewModelScope.launch {
-            loadingDialogState.value = DialogState.SHOW
-            callApi(userId, type)
+            callApi(type)
         }
     }
 
-    private suspend fun callApi(userId: String, type: String) {
+    private suspend fun callApi(type: String) {
+        loadingDialogState.value = true
         val call = HrisApi.retrofitService.addTimeLogs(
-            userId,
+            hrisRepository.profileData.value!!.userID,
             type
         )
         callValue.value = call
-        loadingDialogState.value = DialogState.HIDE
+        loadingDialogState.value = false
     }
 }

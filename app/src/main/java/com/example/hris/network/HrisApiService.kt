@@ -1,9 +1,8 @@
 package com.example.hris.network
 
-import com.example.hris.model.AddTimeLogs
 import com.example.hris.model.ProfileModel
+import com.example.hris.model.ResponseModel
 import com.example.hris.model.TimeLogsModel
-import com.example.hris.model.UpdateProfileModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -50,7 +49,7 @@ interface HrisApiService {
         @Field("emailAddress") emailAddress: String,
         @Field("mobileNumber") mobileNumber: String,
         @Field("landline") landline: String?
-    ): UpdateProfileModel
+    ): ResponseModel
 
     @FormUrlEncoded
     @POST("AppTrainingGetTimeLogs.htm")
@@ -63,7 +62,7 @@ interface HrisApiService {
     suspend fun addTimeLogs(
         @Field("userID") userID: String,
         @Field("type") type: String
-    ): AddTimeLogs
+    ): ResponseModel
 }
 
 object HrisApi {

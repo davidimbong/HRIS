@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.hris.model.User
 import com.example.hris.network.HrisApi
 import com.example.hris.repository.HrisRepository
-import com.example.hris.ui.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,17 +18,18 @@ class LoginViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val userData = MutableLiveData<User>()
-    val loadingDialogState = MutableLiveData<DialogState>()
+
+    val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
     fun userLogin(username: String, password: String) {
         viewModelScope.launch {
-            loadingDialogState.value = DialogState.SHOW
             getLoginDetails(username, password)
         }
     }
 
     private suspend fun getLoginDetails(username: String, password: String) {
+        loadingDialogState.value = true
         val call = HrisApi.retrofitService.getProfile(
             username,
             password
@@ -38,9 +38,9 @@ class LoginViewModel @Inject constructor(
         if (call.status == "0") {
             userData.value = call.user!!
             hrisRepository.refreshProfile(userData.value!!)
-            loadingDialogState.value = DialogState.HIDE
         } else {
             message.value = call.message!!
         }
+        loadingDialogState.value = false
     }
 }
