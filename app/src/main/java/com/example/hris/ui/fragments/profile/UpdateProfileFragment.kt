@@ -12,6 +12,7 @@ import com.example.hris.R
 import com.example.hris.convertToPhone
 import com.example.hris.databinding.FragmentUpdateProfileBinding
 import com.example.hris.ui.MainActivity
+import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,6 +22,7 @@ class UpdateProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentUpdateProfileBinding
     private val viewModel: UpdateProfileViewModel by viewModels()
+    private val mainViewModel: MainActivityViewModel by viewModels()
 
 //    private val loadingDialog: Dialog by lazy {
 //        Dialog(requireContext()).apply {
@@ -74,7 +76,7 @@ class UpdateProfileFragment : Fragment() {
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            (activity as MainActivity).setLoadingDialog(it)
+            mainViewModel.apiBool.value = it
         }
 
         viewModel.message.observe(viewLifecycleOwner) {

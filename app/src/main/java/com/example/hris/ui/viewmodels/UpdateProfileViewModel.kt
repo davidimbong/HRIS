@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.hris.model.User
 import com.example.hris.network.HrisApi
 import com.example.hris.repository.HrisRepository
-import com.example.hris.ui.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

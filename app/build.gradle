@@ -83,6 +83,9 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.44.2'
 
     //card view
-    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    //ktx
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
 }

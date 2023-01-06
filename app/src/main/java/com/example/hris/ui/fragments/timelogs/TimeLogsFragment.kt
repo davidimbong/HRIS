@@ -1,23 +1,27 @@
 package com.example.hris.ui.fragments.timelogs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.databinding.FragmentTimeLogsBinding
 import com.example.hris.ui.MainActivity
 import com.example.hris.ui.adapters.TimeLogsListAdapter
+import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.TimeLogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TimeLogsFragment : Fragment() {
     private val viewModel: TimeLogsViewModel by viewModels()
+    private val mainViewModel: MainActivityViewModel by activityViewModels()
     private lateinit var binding: FragmentTimeLogsBinding
 
     override fun onCreateView(
@@ -36,11 +40,12 @@ class TimeLogsFragment : Fragment() {
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
-            viewModel.getTimeLogs()
+            viewModel.callTimeLogs()
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            (activity as MainActivity).setLoadingDialog(it)
+            Log.d("ASD", "Time logs")
+            mainViewModel.apiBool.value = it
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
@@ -56,6 +61,10 @@ class TimeLogsFragment : Fragment() {
                 findNavController().navigate(action)
             }
             binding.timeLogRecyclerView.adapter = adapter
+        }
+
+        viewModel.timeLogsResponse.observe(viewLifecycleOwner) {
+            viewModel.getTimeLogs()
         }
     }
 }

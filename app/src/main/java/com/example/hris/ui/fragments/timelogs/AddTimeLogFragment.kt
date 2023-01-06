@@ -6,18 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.databinding.FragmentAddTimeLogBinding
 import com.example.hris.ui.MainActivity
 import com.example.hris.ui.viewmodels.AddTimeLogsViewModel
+import com.example.hris.ui.viewmodels.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddTimeLogFragment : Fragment() {
     private val viewModel: AddTimeLogsViewModel by viewModels()
     private lateinit var binding: FragmentAddTimeLogBinding
+    private val mainViewModel: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,17 +46,20 @@ class AddTimeLogFragment : Fragment() {
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            (activity as MainActivity).setLoadingDialog(it)
+            mainViewModel.apiBool.value = it
         }
 
         viewModel.callValue.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            if (it.status == "0") {
-                val action =
-                    AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
-                        binding.Spinner.selectedItem.toString()
-                    )
-                findNavController().navigate(action)
+            if (it != null) {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                if (it.status == "0") {
+                    val action =
+                        AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
+                            binding.Spinner.selectedItem.toString()
+                        )
+                    findNavController().navigate(action)
+                    viewModel.resetValue()
+                }
             }
         }
     }

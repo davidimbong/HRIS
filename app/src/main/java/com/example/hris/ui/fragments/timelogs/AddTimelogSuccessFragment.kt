@@ -1,11 +1,11 @@
 package com.example.hris.ui.fragments.timelogs
 
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +27,6 @@ class AddTimelogSuccessFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,5 +40,20 @@ class AddTimelogSuccessFragment : Fragment() {
         binding.btnOk.setOnClickListener {
             findNavController().navigate(R.id.action_addTimeLogSuccessFragment_to_timeLogsFragment)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true)
+            {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_addTimeLogSuccessFragment_to_timeLogsFragment)
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
     }
 }

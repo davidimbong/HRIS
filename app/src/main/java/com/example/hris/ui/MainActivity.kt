@@ -2,7 +2,9 @@ package com.example.hris.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -10,17 +12,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.example.hris.R
 import com.example.hris.databinding.ActivityMainBinding
+import com.example.hris.ui.viewmodels.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
-enum class DialogState {
-    SHOW, HIDE
-}
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private val viewModel: MainActivityViewModel by viewModels()
 
     private val loadingDialog: Dialog by lazy {
         Dialog(this).apply {
@@ -49,12 +49,20 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        viewModel.apiBool.observe(this){
+            Log.d("ASD", "Observe")
+            setLoadingDialog(it)
+        }
     }
 
     fun setLoadingDialog(loading: Boolean) {
+        Log.d("ASD", "Function")
         if (loading) {
+            Log.d("ASD", "Show")
             loadingDialog.show()
         } else {
+            Log.d("ASD", "Dismiss")
             loadingDialog.dismiss()
         }
     }
