@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.hris.model.User
 import com.example.hris.network.HrisApi
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +16,7 @@ class UpdateProfileViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val userData = hrisRepository.profileData
+    val userData = hrisRepository.userData
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
@@ -42,29 +41,5 @@ class UpdateProfileViewModel @Inject constructor(
         mobileNumber: String,
         landline: String?
     ) {
-        val userID = userData.value!!.userID
-        val idNumber = userData.value!!.idNumber
-        loadingDialogState.value = true
-        val call = HrisApi.retrofitService.updateProfile(
-            userID, firstName, middleName, lastName, emailAddress, mobileNumber, landline
-        )
-
-        if (call.status == "0") {
-            hrisRepository.refreshProfile(
-                User(
-                    userID,
-                    idNumber,
-                    firstName,
-                    middleName,
-                    lastName,
-                    emailAddress,
-                    mobileNumber,
-                    landline
-                )
-            )
-        } else {
-            message.value = call.message
-        }
-        loadingDialogState.value = false
     }
 }

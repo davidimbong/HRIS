@@ -16,7 +16,7 @@ class TimeLogsViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val user = hrisRepository.profileData
+    val user = hrisRepository.userData
     val timeLogs = MutableLiveData<List<TimeLogs>>()
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()

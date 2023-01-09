@@ -17,7 +17,7 @@ class ProfileViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val userData = hrisRepository.profileData
+    private val userData = hrisRepository.userData
     val userProfile = MediatorLiveData<Profile>()
 
 

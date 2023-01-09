@@ -8,8 +8,6 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class TimeLogsModel(
-    override val status: String?,
-    override val message: String?,
     val timeLogs: List<TimeLogs>?
 ) : ResponseModel()
 
@@ -24,9 +22,3 @@ data class TimeLogs (
     val breakIn: String?,
     val timeOut: String?
 ) : Parcelable
-
-@JsonClass(generateAdapter = true)
-data class AddTimeLogsResponseModel(
-    override val status: String?,
-    override val message: String?
-) : ResponseModel()

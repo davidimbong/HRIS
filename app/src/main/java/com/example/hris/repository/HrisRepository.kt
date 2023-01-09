@@ -15,23 +15,74 @@ class HrisRepository @Inject constructor(
     private val hrisDao: HrisDao
 ) {
 
-    val profileData: LiveData<User> = hrisDao.getProfile()
+    val loginData = MutableLiveData<User>()
+    val loginMessage = MutableLiveData<String>()
+
+    val userData = hrisDao.getProfile()
+    val updateProfileMessage = MutableLiveData<String>()
 
     val timeLogs: LiveData<List<TimeLogs>> = hrisDao.getTimeLogs()
     val timeLogsResponse = MutableLiveData<TimeLogsModel>()
-    val addTimeLogsResponse = MutableLiveData<AddTimeLogsResponseModel>()
+    val addTimeLogsResponse = MutableLiveData<ResponseModel>()
 
-    suspend fun refreshProfile(user: User) {
-        withContext(Dispatchers.IO) {
+    suspend fun insertProfile(username: String, password: String) {
+        val call = HrisApi.retrofitService.getProfile(
+            username,
+            password
+        )
+
+        if (call.status == "0") {
+            withContext(Dispatchers.IO) {
+                hrisDao.deleteProfile()
+                hrisDao.insertProfile(call.user!!)
+                loginData.postValue(hrisDao.getProfile().value)
+            }
+        } else {
+            loginMessage.postValue(call.message!!)
+        }
+    }
+
+    suspend fun updateProfile(
+        firstName: String,
+        middleName: String?,
+        lastName: String,
+        emailAddress: String,
+        mobileNumber: String,
+        landline: String?
+    ) {
+        val call = HrisApi.retrofitService.updateProfile(
+            userData.value!!.userID,
+            firstName,
+            middleName,
+            lastName,
+            emailAddress,
+            mobileNumber,
+            landline
+        )
+
+        if (call.status == "0") {
             hrisDao.deleteProfile()
-            hrisDao.insertProfile(user)
+            hrisDao.insertProfile(
+                User(
+                    userData.value!!.userID,
+                    userData.value!!.idNumber,
+                    firstName,
+                    middleName,
+                    lastName,
+                    emailAddress,
+                    mobileNumber,
+                    landline
+                )
+            )
+        } else {
+            updateProfileMessage.postValue(call.message!!)
         }
     }
 
     suspend fun refreshTimeLogs() {
         withContext(Dispatchers.IO) {
             val call = HrisApi.retrofitService.getTimeLogs(
-                profileData.value!!.userID
+                userData.value!!.userID
             )
             if (call.status == "0") {
                 hrisDao.deleteTimeLogs()
@@ -41,13 +92,13 @@ class HrisRepository @Inject constructor(
         }
     }
 
-    suspend fun addTimeLogs(type: String) {
+    suspend fun addTimeLogs(type: String) =
         withContext(Dispatchers.IO) {
             val call = HrisApi.retrofitService.addTimeLogs(
-                profileData.value!!.userID,
+                userData.value!!.userID,
                 type
             )
+
             addTimeLogsResponse.postValue(call)
         }
     }
-}

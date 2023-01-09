@@ -63,7 +63,7 @@ interface HrisApiService {
     suspend fun addTimeLogs(
         @Field("userID") userID: String,
         @Field("type") type: String
-    ): AddTimeLogsResponseModel
+    ): ResponseModel
 }
 
 object HrisApi {

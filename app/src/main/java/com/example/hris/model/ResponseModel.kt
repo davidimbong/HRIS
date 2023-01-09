@@ -1,6 +1,6 @@
 package com.example.hris.model
 
-abstract class ResponseModel {
-    abstract val status: String?
-    abstract val message: String?
-}
+open class ResponseModel (
+    var status: String? = "",
+    var message: String? = ""
+    )

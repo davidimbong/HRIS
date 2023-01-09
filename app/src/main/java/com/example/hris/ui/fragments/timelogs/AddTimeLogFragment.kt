@@ -50,17 +50,18 @@ class AddTimeLogFragment : Fragment() {
         }
 
         viewModel.callValue.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                if (it.status == "0") {
-                    val action =
-                        AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
-                            binding.Spinner.selectedItem.toString()
-                        )
-                    findNavController().navigate(action)
-                    viewModel.resetValue()
-                }
+            if (it == null)
+                return@observe
+
+            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            if (it.status == "0") {
+                val action =
+                    AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
+                        binding.Spinner.selectedItem.toString()
+                    )
+                findNavController().navigate(action)
             }
         }
+
     }
 }
