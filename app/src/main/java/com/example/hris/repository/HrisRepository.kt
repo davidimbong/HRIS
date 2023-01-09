@@ -19,11 +19,8 @@ class HrisRepository @Inject constructor(
     val loginMessage = MutableLiveData<String>()
 
     val userData = hrisDao.getProfile()
-    val updateProfileMessage = MutableLiveData<String>()
 
     val timeLogs: LiveData<List<TimeLogs>> = hrisDao.getTimeLogs()
-    val timeLogsResponse = MutableLiveData<TimeLogsModel>()
-    val addTimeLogsResponse = MutableLiveData<ResponseModel>()
 
     suspend fun insertProfile(username: String, password: String) {
         val call = HrisApi.retrofitService.getProfile(
@@ -49,7 +46,7 @@ class HrisRepository @Inject constructor(
         emailAddress: String,
         mobileNumber: String,
         landline: String?
-    ) {
+    ): String {
         val call = HrisApi.retrofitService.updateProfile(
             userData.value!!.userID,
             firstName,
@@ -74,12 +71,12 @@ class HrisRepository @Inject constructor(
                     landline
                 )
             )
-        } else {
-            updateProfileMessage.postValue(call.message!!)
         }
+
+        return call.message!!
     }
 
-    suspend fun refreshTimeLogs() {
+    suspend fun refreshTimeLogs():TimeLogsModel=
         withContext(Dispatchers.IO) {
             val call = HrisApi.retrofitService.getTimeLogs(
                 userData.value!!.userID
@@ -88,17 +85,14 @@ class HrisRepository @Inject constructor(
                 hrisDao.deleteTimeLogs()
                 hrisDao.insertTimeLogs(call.timeLogs!!)
             }
-            timeLogsResponse.postValue(call)
+            call
         }
-    }
 
-    suspend fun addTimeLogs(type: String) =
+    suspend fun addTimeLogs(type: String): ResponseModel =
         withContext(Dispatchers.IO) {
-            val call = HrisApi.retrofitService.addTimeLogs(
+            HrisApi.retrofitService.addTimeLogs(
                 userData.value!!.userID,
                 type
             )
-
-            addTimeLogsResponse.postValue(call)
         }
-    }
+}

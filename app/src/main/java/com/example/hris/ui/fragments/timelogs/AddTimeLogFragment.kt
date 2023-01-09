@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.databinding.FragmentAddTimeLogBinding
-import com.example.hris.ui.MainActivity
 import com.example.hris.ui.viewmodels.AddTimeLogsViewModel
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,18 +48,17 @@ class AddTimeLogFragment : Fragment() {
             mainViewModel.apiBool.value = it
         }
 
-        viewModel.callValue.observe(viewLifecycleOwner) {
-            if (it == null)
-                return@observe
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
 
+        viewModel.callValue.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            if (it.status == "0") {
-                val action =
-                    AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
-                        binding.Spinner.selectedItem.toString()
-                    )
-                findNavController().navigate(action)
-            }
+            val action =
+                AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
+                    binding.Spinner.selectedItem.toString()
+                )
+            findNavController().navigate(action)
         }
 
     }

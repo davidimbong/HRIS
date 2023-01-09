@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.hris.model.ResponseModel
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,21 +18,21 @@ class AddTimeLogsViewModel @Inject constructor(
 
     val loadingDialogState = MutableLiveData<Boolean>()
     val callValue = MutableLiveData<ResponseModel>()
+    val message = MutableLiveData<String>()
 
     fun addTimeLogs(type: String) {
         viewModelScope.launch {
-            getResponse(type)
-        }
-    }
-
-    suspend fun getResponse(type: String) {
-        viewModelScope.async {
             loadingDialogState.value = true
-            hrisRepository.addTimeLogs(
+            val call = hrisRepository.addTimeLogs(
                 type
             )
             loadingDialogState.value = false
-            callValue.value = hrisRepository.addTimeLogsResponse.value
-        }.await()
+
+            if (call.status == "0") {
+                callValue.value = call
+            } else {
+                message.value = call.message!!
+            }
+        }
     }
 }

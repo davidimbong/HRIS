@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hris.model.TimeLogs
+import com.example.hris.model.TimeLogsModel
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,12 +21,12 @@ class TimeLogsViewModel @Inject constructor(
     val timeLogs = MutableLiveData<List<TimeLogs>>()
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
-    val timeLogsResponse = hrisRepository.timeLogsResponse
+    val timeLogsResponse = MutableLiveData<TimeLogsModel>()
 
     fun callTimeLogs() {
         viewModelScope.launch {
             loadingDialogState.value = true
-            hrisRepository.refreshTimeLogs()
+            timeLogsResponse.value = hrisRepository.refreshTimeLogs()
         }
     }
 
