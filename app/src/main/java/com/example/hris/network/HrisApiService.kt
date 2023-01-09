@@ -1,6 +1,5 @@
 package com.example.hris.network
 
-import com.example.hris.model.AddTimeLogsResponseModel
 import com.example.hris.model.ProfileModel
 import com.example.hris.model.ResponseModel
 import com.example.hris.model.TimeLogsModel

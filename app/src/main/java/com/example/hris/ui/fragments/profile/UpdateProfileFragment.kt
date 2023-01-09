@@ -11,11 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.convertToPhone
 import com.example.hris.databinding.FragmentUpdateProfileBinding
-import com.example.hris.ui.MainActivity
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpdateProfileFragment : Fragment() {

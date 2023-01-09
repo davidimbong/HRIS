@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.databinding.FragmentTimeLogsBinding
-import com.example.hris.ui.MainActivity
 import com.example.hris.ui.adapters.TimeLogsListAdapter
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.TimeLogsViewModel
