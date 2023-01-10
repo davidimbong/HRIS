@@ -42,10 +42,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.loginResponse.observe(this) {
-            viewModel.isValidLogin()
-        }
-
         viewModel.loadingDialogState.observe(this) {
             setLoadingDialog(it)
         }

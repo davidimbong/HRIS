@@ -1,6 +1,5 @@
 package com.example.hris.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.hris.data.HrisDao
 import com.example.hris.model.*
 import com.example.hris.network.HrisApi
@@ -16,17 +15,19 @@ class HrisRepository @Inject constructor(
     val userData = hrisDao.getProfile()
     val timeLogs = hrisDao.getTimeLogs()
 
-    suspend fun login(username: String, password: String): LoginModel =
-        HrisApi.retrofitService.getProfile(
+    suspend fun login(username: String, password: String): LoginModel {
+        val call = HrisApi.retrofitService.getProfile(
             username,
             password
         )
 
-    suspend fun refreshProfile(user: User) {
-        withContext(Dispatchers.IO) {
-            hrisDao.deleteProfile()
-            hrisDao.insertProfile(user)
+        if (call.status == "0"){
+            withContext(Dispatchers.IO) {
+                hrisDao.deleteProfile()
+                hrisDao.insertProfile(call.user!!)
+            }
         }
+        return call
     }
 
     suspend fun updateProfile(

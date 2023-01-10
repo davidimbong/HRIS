@@ -51,18 +51,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.apiBool.observe(this) {
-            Log.d("ASD", "Observe")
             setLoadingDialog(it)
         }
     }
 
     fun setLoadingDialog(loading: Boolean) {
-        Log.d("ASD", "Function")
         if (loading) {
-            Log.d("ASD", "Show")
             loadingDialog.show()
         } else {
-            Log.d("ASD", "Dismiss")
             loadingDialog.dismiss()
         }
     }

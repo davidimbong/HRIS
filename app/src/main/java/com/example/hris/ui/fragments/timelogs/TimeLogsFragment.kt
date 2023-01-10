@@ -43,7 +43,6 @@ class TimeLogsFragment : Fragment() {
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
-            Log.d("ASD", "Time logs")
             mainViewModel.apiBool.value = it
         }
 
