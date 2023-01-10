@@ -22,13 +22,13 @@ class ProfileViewModel @Inject constructor(
 
 
     init {
-        userProfile.addSource(userData){
+        userProfile.addSource(userData) {
 
             val initials = "${it.firstName.first()}${it.lastName.first()}"
             val name = "${it.firstName.uppercase()} " +
-                        if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
-                        else "" +
-                                it.lastName.uppercase()
+                    if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
+                    else "" +
+                            it.lastName.uppercase()
             val idNumber = it.idNumber
             val email = it.emailAddress.hideEmail()
             val phoneNumber = it.mobileNumber.convertToPhone().hidePhoneNumber()

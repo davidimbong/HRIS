@@ -45,8 +45,7 @@ class AddTimelogSuccessFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true)
-            {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     findNavController().navigate(R.id.action_addTimeLogSuccessFragment_to_timeLogsFragment)
                 }

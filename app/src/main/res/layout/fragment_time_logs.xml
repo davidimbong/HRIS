@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/timelogsToolbar"
-        layout="@layout/add_toolbar_layout"/>
+        layout="@layout/add_toolbar_layout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

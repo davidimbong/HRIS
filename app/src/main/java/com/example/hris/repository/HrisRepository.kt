@@ -1,6 +1,5 @@
 package com.example.hris.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.hris.data.HrisDao
 import com.example.hris.model.*
@@ -14,28 +13,19 @@ import javax.inject.Singleton
 class HrisRepository @Inject constructor(
     private val hrisDao: HrisDao
 ) {
-
-    val loginData = MutableLiveData<User>()
-    val loginMessage = MutableLiveData<String>()
-
     val userData = hrisDao.getProfile()
+    val timeLogs = hrisDao.getTimeLogs()
 
-    val timeLogs: LiveData<List<TimeLogs>> = hrisDao.getTimeLogs()
-
-    suspend fun insertProfile(username: String, password: String) {
-        val call = HrisApi.retrofitService.getProfile(
+    suspend fun login(username: String, password: String): LoginModel =
+        HrisApi.retrofitService.getProfile(
             username,
             password
         )
 
-        if (call.status == "0") {
-            withContext(Dispatchers.IO) {
-                hrisDao.deleteProfile()
-                hrisDao.insertProfile(call.user!!)
-                loginData.postValue(hrisDao.getProfile().value)
-            }
-        } else {
-            loginMessage.postValue(call.message!!)
+    suspend fun refreshProfile(user: User) {
+        withContext(Dispatchers.IO) {
+            hrisDao.deleteProfile()
+            hrisDao.insertProfile(user)
         }
     }
 
@@ -76,7 +66,7 @@ class HrisRepository @Inject constructor(
         return call.message!!
     }
 
-    suspend fun refreshTimeLogs():TimeLogsModel=
+    suspend fun refreshTimeLogs(): TimeLogsModel =
         withContext(Dispatchers.IO) {
             val call = HrisApi.retrofitService.getTimeLogs(
                 userData.value!!.userID

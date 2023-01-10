@@ -14,7 +14,7 @@ data class TimeLogsModel(
 @Parcelize
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "time_logs")
-data class TimeLogs (
+data class TimeLogs(
     @PrimaryKey
     val date: String,
     val timeIn: String?,

@@ -26,6 +26,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             HrisDatabase::class.java,
-            "hris_database").build()
+            "hris_database"
+        ).build()
     }
 }

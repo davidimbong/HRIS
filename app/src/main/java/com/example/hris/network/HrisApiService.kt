@@ -1,6 +1,6 @@
 package com.example.hris.network
 
-import com.example.hris.model.ProfileModel
+import com.example.hris.model.LoginModel
 import com.example.hris.model.ResponseModel
 import com.example.hris.model.TimeLogsModel
 import com.squareup.moshi.Moshi
@@ -36,7 +36,7 @@ interface HrisApiService {
     suspend fun getProfile(
         @Field("userID") userID: String,
         @Field("password") password: String
-    ): ProfileModel
+    ): LoginModel
 
 
     @FormUrlEncoded

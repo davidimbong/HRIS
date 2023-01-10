@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ProfileModel(
+data class LoginModel(
     val status: String,
     val message: String?,
     val user: User?

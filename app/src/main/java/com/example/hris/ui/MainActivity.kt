@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        viewModel.apiBool.observe(this){
+        viewModel.apiBool.observe(this) {
             Log.d("ASD", "Observe")
             setLoadingDialog(it)
         }

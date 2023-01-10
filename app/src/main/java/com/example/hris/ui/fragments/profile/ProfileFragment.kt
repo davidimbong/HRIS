@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.databinding.FragmentProfileBinding
 import com.example.hris.ui.LoginActivity
-import com.example.hris.ui.MainActivity
 import com.example.hris.ui.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -6,7 +6,7 @@ import com.example.hris.timeNullChecker
 
 class TimeLogsDetailedViewModel : ViewModel() {
 
-    fun nullChecker(time: String?): String{
+    fun nullChecker(time: String?): String {
         if (time.isNullOrEmpty())
             return time.timeNullChecker()
 

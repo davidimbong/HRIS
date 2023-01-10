@@ -17,7 +17,7 @@ class AddTimeLogsViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val loadingDialogState = MutableLiveData<Boolean>()
-    val callValue = MutableLiveData<ResponseModel>()
+    val liveDataSuccess = MutableLiveData<Unit>()
     val message = MutableLiveData<String>()
 
     fun addTimeLogs(type: String) {
@@ -29,7 +29,7 @@ class AddTimeLogsViewModel @Inject constructor(
             loadingDialogState.value = false
 
             if (call.status == "0") {
-                callValue.value = call
+                liveDataSuccess.value = Unit
             } else {
                 message.value = call.message!!
             }

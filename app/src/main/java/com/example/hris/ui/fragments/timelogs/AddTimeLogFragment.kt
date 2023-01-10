@@ -52,8 +52,8 @@ class AddTimeLogFragment : Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.callValue.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+        viewModel.liveDataSuccess.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Time log successfully added", Toast.LENGTH_SHORT).show()
             val action =
                 AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
                     binding.Spinner.selectedItem.toString()

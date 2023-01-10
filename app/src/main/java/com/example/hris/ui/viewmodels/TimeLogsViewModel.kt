@@ -30,7 +30,7 @@ class TimeLogsViewModel @Inject constructor(
         }
     }
 
-    fun getTimeLogs(){
+    fun getTimeLogs() {
         if (timeLogsResponse.value!!.status == "0") {
             timeLogs.value = timeLogsResponse.value!!.timeLogs!!
         } else {

@@ -37,9 +37,13 @@ class LoginActivity : AppCompatActivity() {
             viewModel.userLogin(username, password)
         }
 
-        viewModel.userData.observe(this) {
+        viewModel.liveDataSuccess.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }
+
+        viewModel.loginResponse.observe(this) {
+            viewModel.isValidLogin()
         }
 
         viewModel.loadingDialogState.observe(this) {
