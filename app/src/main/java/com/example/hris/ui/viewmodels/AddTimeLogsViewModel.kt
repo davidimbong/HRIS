@@ -28,7 +28,7 @@ class AddTimeLogsViewModel @Inject constructor(
             )
             loadingDialogState.value = false
 
-            if (call.status == "0") {
+            if (call.isSuccess) {
                 liveDataSuccess.value = Unit
             } else {
                 message.value = call.message!!

@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
             val loginResponse = hrisRepository.login(username, password)
             loadingDialogState.value = false
 
-            if (loginResponse.status == "0") {
+            if (loginResponse.isSuccess) {
                 liveDataSuccess.value = Unit
             } else {
                 message.value = loginResponse.message!!

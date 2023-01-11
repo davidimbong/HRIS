@@ -21,7 +21,7 @@ class HrisRepository @Inject constructor(
             password
         )
 
-        if (call.status == "0"){
+        if (call.isSuccess){
             withContext(Dispatchers.IO) {
                 hrisDao.deleteProfile()
                 hrisDao.insertProfile(call.user!!)
@@ -48,7 +48,7 @@ class HrisRepository @Inject constructor(
             landline
         )
 
-        if (call.status == "0") {
+        if (call.isSuccess) {
             hrisDao.deleteProfile()
             hrisDao.insertProfile(
                 User(
@@ -72,7 +72,7 @@ class HrisRepository @Inject constructor(
             val call = HrisApi.retrofitService.getTimeLogs(
                 userData.value!!.userID
             )
-            if (call.status == "0") {
+            if (call.isSuccess) {
                 hrisDao.deleteTimeLogs()
                 hrisDao.insertTimeLogs(call.timeLogs!!)
             }

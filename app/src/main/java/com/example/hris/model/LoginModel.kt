@@ -6,10 +6,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class LoginModel(
-    val status: String,
-    val message: String?,
     val user: User?
-)
+): ResponseModel()
 
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "profile_data")
