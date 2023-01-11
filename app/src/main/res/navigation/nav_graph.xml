@@ -63,7 +63,7 @@
             app:destination="@id/addTimeLogsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popUpTo="@id/addTimeLogsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -89,7 +89,9 @@
             android:id="@+id/action_addTimeLogsFragment_to_addTimeLogSuccessFragment"
             app:destination="@id/addTimeLogSuccessFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:launchSingleTop="false" />
+            app:launchSingleTop="false"
+            app:popUpTo="@id/addTimeLogSuccessFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addTimeLogsFragment_to_timeLogsFragment"
             app:destination="@id/timeLogsFragment"
@@ -106,7 +108,7 @@
             app:destination="@id/timeLogsFragment"
             app:launchSingleTop="false"
             app:popUpTo="@id/timeLogsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
         <argument
             android:name="type"
             app:argType="string" />

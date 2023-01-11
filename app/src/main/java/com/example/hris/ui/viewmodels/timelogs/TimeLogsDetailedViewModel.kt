@@ -1,4 +1,4 @@
-package com.example.hris.ui.viewmodels
+package com.example.hris.ui.viewmodels.timelogs
 
 import androidx.lifecycle.ViewModel
 import com.example.hris.convertTime24to12

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.hris.databinding.FragmentTimeLogsDetailedBinding
 import com.example.hris.textColorSetter
-import com.example.hris.ui.viewmodels.TimeLogsDetailedViewModel
+import com.example.hris.ui.viewmodels.timelogs.TimeLogsDetailedViewModel
 
 class TimeLogsDetailedFragment : Fragment() {
 

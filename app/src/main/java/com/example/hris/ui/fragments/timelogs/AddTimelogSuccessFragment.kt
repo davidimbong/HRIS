@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.hris.R
 import com.example.hris.databinding.FragmentAddTimelogSuccessBinding
-import com.example.hris.ui.viewmodels.AddTimelogSuccessViewModel
+import com.example.hris.ui.viewmodels.timelogs.AddTimelogSuccessViewModel
 
 class AddTimelogSuccessFragment : Fragment() {
 

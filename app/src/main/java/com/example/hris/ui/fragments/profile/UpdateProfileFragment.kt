@@ -12,7 +12,7 @@ import com.example.hris.R
 import com.example.hris.convertToPhone
 import com.example.hris.databinding.FragmentUpdateProfileBinding
 import com.example.hris.ui.viewmodels.MainActivityViewModel
-import com.example.hris.ui.viewmodels.UpdateProfileViewModel
+import com.example.hris.ui.viewmodels.profile.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

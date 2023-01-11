@@ -1,4 +1,4 @@
-package com.example.hris.ui.viewmodels
+package com.example.hris.ui.viewmodels.profile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

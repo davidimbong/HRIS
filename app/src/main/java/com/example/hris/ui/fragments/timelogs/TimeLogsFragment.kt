@@ -1,7 +1,6 @@
 package com.example.hris.ui.fragments.timelogs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.example.hris.R
 import com.example.hris.databinding.FragmentTimeLogsBinding
 import com.example.hris.ui.adapters.TimeLogsListAdapter
 import com.example.hris.ui.viewmodels.MainActivityViewModel
-import com.example.hris.ui.viewmodels.TimeLogsViewModel
+import com.example.hris.ui.viewmodels.timelogs.TimeLogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +34,7 @@ class TimeLogsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.timelogsToolbar.btnAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_timeLogsFragment_to_addTimeLogsFragment)
+            findNavController().navigate(TimeLogsFragmentDirections.actionTimeLogsFragmentToAddTimeLogsFragment())
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
@@ -59,10 +58,6 @@ class TimeLogsFragment : Fragment() {
                 findNavController().navigate(action)
             }
             binding.timeLogRecyclerView.adapter = adapter
-        }
-
-        viewModel.timeLogsResponse.observe(viewLifecycleOwner) {
-            viewModel.getTimeLogs()
         }
     }
 }
