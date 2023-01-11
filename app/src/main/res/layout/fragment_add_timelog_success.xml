@@ -4,26 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/layout_padding"
-    tools:context=".ui.SuccessFragment">
+    tools:context=".ui.fragments.timelogs.AddTimelogSuccessFragment">
+
+    <include
+        android:id="@+id/successToolbar"
+        layout="@layout/success_toolbar_layout"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/txtSuccess"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_double_margin"
+        android:layout_marginTop="@dimen/layout_double_margin"
+        android:text="@string/addTimelogSuccess"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:layout_marginTop="@dimen/layout_double_margin"
-        android:layout_marginHorizontal="@dimen/layout_margin"
         android:textSize="@dimen/success_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/successToolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/successDataLayout"
+        android:id="@+id/timelogSuccessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSuccess">
@@ -40,13 +47,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/views_margin"
             android:background="@drawable/edittext_background"
             android:padding="@dimen/views_margin"
-            android:text="@string/time_in"
             android:textColor="@color/black"
             android:textSize="@dimen/time_text_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,15 +68,15 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
         <TextView
+            android:id="@+id/tvTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/views_margin"
             android:background="@drawable/edittext_background"
             android:padding="@dimen/views_margin"
-            android:text="8:57 AM"
             android:textColor="@color/black"
             android:textSize="@dimen/time_text_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,11 +89,11 @@
         android:id="@+id/btnOk"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_margin"
         android:background="@drawable/button_background"
         android:text="@string/ok"
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/layout_margin"
-    tools:context=".ui.fragments.TimeLogsDetailedFragment">
+    tools:context=".ui.fragments.timelogs.TimeLogsDetailedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintPresent"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtTimeIn" />
 
         <TextView
-            android:id="@+id/txtBreakIn"
+            android:id="@+id/txtBreakOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -87,7 +87,7 @@
             app:layout_constraintTop_toTopOf="@+id/txtBreakIn" />
 
         <TextView
-            android:id="@+id/txtBreakOut"
+            android:id="@+id/txtBreakIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin"

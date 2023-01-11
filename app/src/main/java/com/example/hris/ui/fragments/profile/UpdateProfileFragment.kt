@@ -1,11 +1,9 @@
-package com.example.hris.ui.profile
+package com.example.hris.ui.fragments.profile
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,20 +11,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.convertToPhone
 import com.example.hris.databinding.FragmentUpdateProfileBinding
-import com.example.hris.ui.CustomDialogFragment
-import com.example.hris.ui.DialogState
-import com.example.hris.ui.FragmentType
+import com.example.hris.ui.viewmodels.MainActivityViewModel
+import com.example.hris.ui.viewmodels.profile.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpdateProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentUpdateProfileBinding
     private val viewModel: UpdateProfileViewModel by viewModels()
-
-    @Inject
-    lateinit var loadingDialog: CustomDialogFragment
+    private val mainViewModel: MainActivityViewModel by viewModels()
 
 //    private val loadingDialog: Dialog by lazy {
 //        Dialog(requireContext()).apply {
@@ -56,11 +50,7 @@ class UpdateProfileFragment : Fragment() {
 //                binding.txtMobileNumber.text.toString().convertToLocalPhone(),
 //                binding.txtLandLine.text.toString()
 //            )
-            val action =
-                UpdateProfileFragmentDirections.actionUpdateProfileFragmentToSuccessFragment(
-                    FragmentType.PROFILE
-                )
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_updateProfileFragment_to_updateProfileSuccessFragment)
         }
 
         viewModel.userData.observe(viewLifecycleOwner) {
@@ -83,12 +73,12 @@ class UpdateProfileFragment : Fragment() {
             }
         }
 
-        viewModel.loadingDialogState.observe(viewLifecycleOwner){
-            loadingDialog.apiCalling(it, childFragmentManager)
+        viewModel.loadingDialogState.observe(viewLifecycleOwner) {
+            mainViewModel.apiBool.value = it
         }
 
-        viewModel.message.observe(viewLifecycleOwner){
-            loadingDialog.apiToast(it)
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -4,30 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/layout_padding"
-    tools:context=".ui.fragments.AddTimeLogFragment">
+    tools:context=".ui.fragments.timelogs.AddTimeLogFragment">
+
+    <include
+        android:id="@+id/addTimelogsToolbar"
+        layout="@layout/cancel_done_toolbar_layout" />
 
     <TextView
         android:id="@+id/Type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_padding"
         android:text="@string/type"
-        android:textSize="@dimen/text_size"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/addTimelogsToolbar" />
 
     <Spinner
+        android:id="@+id/Spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_padding"
         android:layout_marginTop="@dimen/views_margin"
-        android:paddingVertical="13dp"
         android:background="@drawable/spinner_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="parent"
         android:dropDownSelector="@color/black"
+        android:paddingVertical="13dp"
+        android:spinnerMode="dropdown"
+        android:entries="@array/timelogsTypeSpinnerItems"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Type" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

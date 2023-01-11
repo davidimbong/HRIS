@@ -41,11 +41,16 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="profile">Me</string>
+    <string name="profile">Profile</string>
     <string name="clients">Clients</string>
     <string name="leaves">Leaves</string>
     <string name="time_logs">Time Logs</string>
     <string name="apiCallLoading"> Retrieving data from the server </string>
 
     <string name="updateProfileSuccess">You have successfully updated your profile!</string>
+    <string name="addTimelogSuccess">You have successfully saved the following details:</string>
+    <string name="logout">Logout</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="success">Success</string>
 </resources>

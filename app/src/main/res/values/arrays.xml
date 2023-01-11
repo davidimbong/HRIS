@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="timelogsTypeSpinnerItems">
+        <item>Time in</item>
+        <item>Break out</item>
+        <item>Break in</item>
+        <item>Time out</item>
+    </string-array>
+</resources>

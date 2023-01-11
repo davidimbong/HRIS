@@ -1,10 +1,8 @@
-package com.example.hris.ui.profile
+package com.example.hris.ui.viewmodels.profile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.hris.convertToLandline
 import com.example.hris.convertToPhone
 import com.example.hris.hideEmail
 import com.example.hris.hidePhoneNumber
@@ -19,18 +17,18 @@ class ProfileViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val userData = hrisRepository.profileData
+    private val userData = hrisRepository.userData
     val userProfile = MediatorLiveData<Profile>()
 
 
     init {
-        userProfile.addSource(userData){
+        userProfile.addSource(userData) {
 
             val initials = "${it.firstName.first()}${it.lastName.first()}"
             val name = "${it.firstName.uppercase()} " +
-                        if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
-                        else "" +
-                                it.lastName.uppercase()
+                    if (!it.middleName.isNullOrEmpty()) "${it.middleName.uppercase()} "
+                    else "" +
+                            it.lastName.uppercase()
             val idNumber = it.idNumber
             val email = it.emailAddress.hideEmail()
             val phoneNumber = it.mobileNumber.convertToPhone().hidePhoneNumber()

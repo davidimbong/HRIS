@@ -1,4 +1,4 @@
-package com.example.hris.ui.login
+package com.example.hris.ui
 
 import android.app.Dialog
 import android.content.Intent
@@ -9,20 +9,21 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hris.R
 import com.example.hris.databinding.ActivityLoginBinding
-import com.example.hris.ui.CustomDialogFragment
-import com.example.hris.ui.DialogState
-import com.example.hris.ui.MainActivity
+import com.example.hris.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-
-    @Inject
-    lateinit var loadingDialog: CustomDialogFragment
+    private val loadingDialog: Dialog by lazy {
+        Dialog(this).apply {
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            this.setCancelable(false)
+            this.setContentView(R.layout.api_calling_dialog)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +37,25 @@ class LoginActivity : AppCompatActivity() {
             viewModel.userLogin(username, password)
         }
 
-        viewModel.userData.observe(this) {
+        viewModel.liveDataSuccess.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
-        viewModel.loadingDialogState.observe(this){
-            loadingDialog.apiCalling(it, supportFragmentManager)
+        viewModel.loadingDialogState.observe(this) {
+            setLoadingDialog(it)
         }
 
-        viewModel.message.observe(this){
-            loadingDialog.apiToast(it)
+        viewModel.message.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun setLoadingDialog(loading: Boolean) {
+        if (loading) {
+            loadingDialog.show()
+        } else {
+            loadingDialog.dismiss()
         }
     }
 }

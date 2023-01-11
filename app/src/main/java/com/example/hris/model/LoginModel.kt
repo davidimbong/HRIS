@@ -5,17 +5,9 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ProfileModel(
-    val status: String,
-    val message: String?,
+data class LoginModel(
     val user: User?
-)
-
-@JsonClass(generateAdapter = true)
-data class UpdateProfileModel(
-    val status: String,
-    val message: String,
-)
+): ResponseModel()
 
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "profile_data")
