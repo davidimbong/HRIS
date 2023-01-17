@@ -21,12 +21,10 @@ class LeavesListAdapter(
 
         fun bind(leaves: Leaves, viewModel: LeavesViewModel) {
             binding.txtLeaveDate.apply {
-                val date: String
-                if (leaves.dateTo != null) {
-                    date =
-                        "${leaves.dateFrom.convertDateMonthDay()} to ${leaves.dateTo.convertDateMonthDay()}"
+                val date: String = if (leaves.dateTo != null && leaves.dateTo != leaves.dateFrom) {
+                    "${leaves.dateFrom.convertDateMonthDay()} to ${leaves.dateTo.convertDateMonthDay()}"
                 } else {
-                    date = leaves.dateFrom.convertDateMonthDay()
+                    leaves.dateFrom.convertDateMonthDay()
                 }
                 text = date
             }
@@ -41,10 +39,11 @@ class LeavesListAdapter(
                 }
 
                 if (leaves.type == "1") {
-                    viewModel.totalVacationLeaves.value = days
+                    viewModel.totalVacationLeaves.value =
+                        viewModel.totalVacationLeaves.value!! - +days
                     binding.txtLeaveType.text = context.getString(R.string.vacation_leave)
                 } else {
-                    viewModel.totalSickLeaves.value = days
+                    viewModel.totalSickLeaves.value = viewModel.totalSickLeaves.value!! - +days
                     binding.txtLeaveType.text = context.getString(R.string.sick_leave)
                 }
 

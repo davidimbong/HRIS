@@ -72,7 +72,7 @@ interface HrisApiService {
     ): LeavesModel
 
     @FormUrlEncoded
-    @POST("AppTrainingAddTimeLog.htm")
+    @POST("AppTrainingAddLeave.htm")
     suspend fun fileLeave(
         @Field("userID") userID: String,
         @Field("type") type: String,

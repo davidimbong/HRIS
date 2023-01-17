@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hris.R
+import com.example.hris.convertToNoDecimalString
 import com.example.hris.databinding.FragmentLeavesBinding
 import com.example.hris.ui.adapters.LeavesListAdapter
 import com.example.hris.ui.viewmodels.MainActivityViewModel
@@ -41,25 +42,25 @@ class LeavesFragment : Fragment() {
 
         viewModel.callLeaves()
 
-        viewModel.loadingDialogState.observe(viewLifecycleOwner){
+        viewModel.loadingDialogState.observe(viewLifecycleOwner) {
             mainViewModel.apiBool.value = it
         }
 
-        viewModel.message.observe(viewLifecycleOwner){
+        viewModel.message.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.leaves.observe(viewLifecycleOwner){
+        viewModel.leaves.observe(viewLifecycleOwner) {
             val adapter = LeavesListAdapter(it, viewModel)
             binding.leavesRecyclerView.adapter = adapter
         }
 
-        viewModel.totalVacationLeaves.observe(viewLifecycleOwner){
-            binding.txtVL.text = viewModel.getLeavesLeft(it)
+        viewModel.totalVacationLeaves.observe(viewLifecycleOwner) {
+            binding.txtVL.text = it.convertToNoDecimalString()
         }
 
-        viewModel.totalSickLeaves.observe(viewLifecycleOwner){
-            binding.txtSL.text = viewModel.getLeavesLeft(it)
+        viewModel.totalSickLeaves.observe(viewLifecycleOwner) {
+            binding.txtSL.text = it.convertToNoDecimalString()
         }
     }
 }

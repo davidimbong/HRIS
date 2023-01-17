@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.convertDateMonthDayYear
 import com.example.hris.databinding.FragmentFileLeaveBinding
+import com.example.hris.model.Leaves
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.leaves.FileLeaveViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,17 +41,18 @@ class FileLeaveFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var type = ""
-        var startDate = ""
-        var endDate = ""
+        var startDate: String? = ""
+        var endDate: String? = ""
+        var leaveType = ""
 
         val mCalendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            if(type == getString(R.string.start_date)){
-                startDate = "${month+1}/$dayOfMonth/$year"
-                binding.btnStartDate.text = startDate.convertDateMonthDayYear()
+            if (type == getString(R.string.start_date)) {
+                startDate = "${month + 1}/$dayOfMonth/$year"
+                binding.btnStartDate.text = startDate!!.convertDateMonthDayYear()
             } else {
-                endDate = "${month+1}/$dayOfMonth/$year"
-                binding.btnEndDate.text = endDate.convertDateMonthDayYear()
+                endDate = "${month + 1}/$dayOfMonth/$year"
+                binding.btnEndDate.text = endDate!!.convertDateMonthDayYear()
             }
         }
 
@@ -66,10 +68,12 @@ class FileLeaveFragment : Fragment() {
 
         binding.vacationLeave.setOnClickListener {
             viewModel.type = "1"
+            leaveType = getString(R.string.vacation_leave)
         }
 
         binding.sickLeave.setOnClickListener {
             viewModel.type = "2"
+            leaveType = getString(R.string.sick_leave)
         }
 
         binding.btnStartDate.setOnClickListener {
@@ -90,6 +94,10 @@ class FileLeaveFragment : Fragment() {
             )
         }
 
+        binding.fileLeaveToolbar.btnCancel.setOnClickListener {
+            findNavController().navigate(FileLeaveFragmentDirections.actionFileLeaveFragmentToLeavesFragment())
+        }
+
         viewModel.message.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
@@ -100,7 +108,16 @@ class FileLeaveFragment : Fragment() {
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), "Leave successfully filed", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(FileLeaveFragmentDirections.actionFileLeaveFragmentToLeavesFragment())
+            val action =
+                FileLeaveFragmentDirections.actionFileLeaveFragmentToFileLeaveSuccessFragment(
+                    Leaves(
+                        type = leaveType,
+                        dateFrom = startDate!!,
+                        dateTo = endDate,
+                        time = binding.Spinner.selectedItem.toString()
+                    )
+                )
+            findNavController().navigate(action)
         }
 
         binding.Spinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -110,8 +127,8 @@ class FileLeaveFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                startDate = ""
-                endDate = ""
+                startDate = null
+                endDate = null
 
                 if (position == 0) {
                     setViewsVisibility(true)
@@ -126,7 +143,7 @@ class FileLeaveFragment : Fragment() {
         }
     }
 
-    fun setViewsVisibility(boolean: Boolean) {
+    private fun setViewsVisibility(boolean: Boolean) {
         binding.btnStartDate.text = getString(R.string.select_date)
         binding.btnEndDate.text = getString(R.string.select_date)
         if (boolean) {

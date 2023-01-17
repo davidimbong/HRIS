@@ -33,8 +33,9 @@ class FileLeaveViewModel @Inject constructor(
 
                 if (call.isSuccess) {
                     isSuccess.value = Unit
+                } else {
+                    message.value = call.message!!
                 }
-                message.value = call.message!!
                 loadingDialogState.value = false
             }
         }

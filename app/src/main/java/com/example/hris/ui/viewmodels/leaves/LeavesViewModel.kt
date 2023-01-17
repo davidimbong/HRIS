@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.hris.convertToNoDecimalString
 import com.example.hris.model.Leaves
-import com.example.hris.model.TimeLogs
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +16,6 @@ class LeavesViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val user = hrisRepository.userData
     val leaves = MutableLiveData<List<Leaves>>()
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
@@ -39,9 +36,5 @@ class LeavesViewModel @Inject constructor(
         }
         totalVacationLeaves.value = 13.0
         totalSickLeaves.value = 13.0
-    }
-
-    fun getLeavesLeft(double: Double): String{
-        return (13.0 - double).convertToNoDecimalString()
     }
 }

@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name"> Tera System mobile HRIS</string>
 
+    <!--  login  -->
     <string name="login">Login</string>
     <string name="user_id">User ID</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
 
+    <!--  time log  -->
     <string name="date">DATE</string>
     <string name="in">IN</string>
     <string name="out">OUT</string>
     <string name="type">Type</string>
-    <string name="sick_leave">Sick Leave</string>
-    <string name="vacation_leave">Vacation Leave</string>
     <string name="you_have_successfully_save_the_following_details">You have successfully save the following details:</string>
     <string name="time">Time</string>
     <string name="time_in">Time In</string>
@@ -24,6 +24,7 @@
     <string name="you_were_on">You were on</string>
     <string name="break_time">Break Time</string>
 
+    <!--  profile  -->
     <string name="name">Name</string>
     <string name="id_number">ID Number</string>
     <string name="email_address">Email Address</string>
@@ -35,24 +36,29 @@
     <string name="optional">Optional</string>
     <string name="landline">Landline</string>
 
+    <!--  bottomnavbar  -->
     <string name="profile">Profile</string>
     <string name="clients">Clients</string>
     <string name="leaves">Leaves</string>
     <string name="time_logs">Time Logs</string>
-    <string name="apiCallLoading"> Retrieving data from the server </string>
 
+    <!--  toolbar and success  -->
     <string name="updateProfileSuccess">You have successfully updated your profile!</string>
-    <string name="addTimelogSuccess">You have successfully saved the following details:</string>
+    <string name="addTimeLogSuccess">You have successfully saved the following details:</string>
+    <string name="fileLeaveSuccess">You have successfully saved the following details:</string>
     <string name="logout">Logout</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
     <string name="success">Success</string>
+    <string name="apiCallLoading"> Retrieving data from the server </string>
 
+    <!--  leaves  -->
     <string name="file_leave">File Leave</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="date_">Date</string>
     <string name="select_date">Select date</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sick_leave">Sick Leave</string>
+    <string name="vacation_leave">Vacation Leave</string>
+
 </resources>
