@@ -1,10 +1,7 @@
 package com.example.hris.ui.adapters
 
-import android.graphics.Color
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hris.R
@@ -51,7 +48,6 @@ class TimeLogsListAdapter(
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TimeLogsViewHolder, position: Int) {
         val timeLogs = list[position]
         holder.itemView.setOnClickListener {

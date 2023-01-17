@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingVertical="@dimen/layout_padding"
-    tools:context=".ui.fragments.LeavesFragment">
+    tools:context=".ui.fragments.leaves.LeavesFragment">
+
+    <include
+        android:id="@+id/leavesToolbar"
+        layout="@layout/add_toolbar_layout" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/views_margin"
-        android:layout_marginBottom="@dimen/views_margin"
+        android:layout_marginTop="@dimen/layout_margin"
         android:text="@string/leaves_remaining"
         android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/leavesToolbar" />
 
     <View
         android:id="@+id/view"
@@ -57,7 +60,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/views_margin"
-        android:text="7"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +71,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/views_margin"
-        android:text="12.5"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,9 +137,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leavesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="@dimen/layout_margin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 

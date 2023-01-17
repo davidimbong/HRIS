@@ -1,60 +1,65 @@
 package com.example.hris.ui.fragments.leaves
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.hris.R
+import com.example.hris.databinding.FragmentLeavesBinding
+import com.example.hris.ui.adapters.LeavesListAdapter
+import com.example.hris.ui.viewmodels.MainActivityViewModel
+import com.example.hris.ui.viewmodels.leaves.LeavesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LeavesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class LeavesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val viewModel: LeavesViewModel by viewModels()
+    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var binding: FragmentLeavesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leaves, container, false)
+    ): View {
+        binding = FragmentLeavesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LeavesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LeavesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.leavesToolbar.txtTitle.text = getString(R.string.leaves)
+
+        binding.leavesToolbar.btnAdd.setOnClickListener {
+            findNavController().navigate(LeavesFragmentDirections.actionLeavesFragmentToFileLeaveFragment())
+        }
+
+        viewModel.callLeaves()
+
+        viewModel.loadingDialogState.observe(viewLifecycleOwner){
+            mainViewModel.apiBool.value = it
+        }
+
+        viewModel.message.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.leaves.observe(viewLifecycleOwner){
+            val adapter = LeavesListAdapter(it, viewModel)
+            binding.leavesRecyclerView.adapter = adapter
+        }
+
+        viewModel.totalVacationLeaves.observe(viewLifecycleOwner){
+            binding.txtVL.text = viewModel.getLeavesLeft(it)
+        }
+
+        viewModel.totalSickLeaves.observe(viewLifecycleOwner){
+            binding.txtSL.text = viewModel.getLeavesLeft(it)
+        }
     }
 }

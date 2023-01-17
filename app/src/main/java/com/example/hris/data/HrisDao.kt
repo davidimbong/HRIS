@@ -2,6 +2,7 @@ package com.example.hris.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.hris.model.Leaves
 import com.example.hris.model.TimeLogs
 import com.example.hris.model.User
 
@@ -25,9 +26,21 @@ interface HrisDao {
 
     @Query("DELETE from time_logs")
     fun deleteTimeLogs()
+
+    @Query("SELECT * from leaves")
+    fun getLeaves(): LiveData<List<Leaves>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertLeaves(leaves: List<Leaves>)
+
+    @Query("DELETE from leaves")
+    fun deleteLeaves()
 }
 
-@Database(entities = [User::class, TimeLogs::class], version = 1)
-abstract class HrisDatabase: RoomDatabase() {
+@Database(
+    entities = [User::class, TimeLogs::class, Leaves::class],
+    version = 2
+)
+abstract class HrisDatabase : RoomDatabase() {
     abstract fun hrisDao(): HrisDao
 }

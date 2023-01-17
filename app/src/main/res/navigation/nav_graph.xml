@@ -45,6 +45,22 @@
         android:name="com.example.hris.ui.fragments.leaves.LeavesFragment"
         android:label="HRIS">
 
+        <action
+            android:id="@+id/action_leavesFragment_to_fileLeaveFragment"
+            app:destination="@id/fileLeaveFragment"
+            app:popUpTo="@id/fileLeaveFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fileLeaveFragment"
+        android:name="com.example.hris.ui.fragments.leaves.FileLeaveFragment"
+        android:label="HRIS">
+
+        <action
+            android:id="@+id/action_fileLeaveFragment_to_leavesFragment"
+            app:destination="@id/leavesFragment"
+            app:popUpTo="@id/leavesFragment" />
     </fragment>
 
     <fragment
@@ -112,6 +128,13 @@
         <argument
             android:name="type"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/datePickerFragment"
+        android:name="com.example.hris.ui.fragments.DatePickerFragment"
+        android:label="HRIS">
+
     </fragment>
 
 </navigation>

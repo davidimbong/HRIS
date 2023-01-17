@@ -21,7 +21,7 @@ class HrisRepository @Inject constructor(
             password
         )
 
-        if (call.isSuccess){
+        if (call.isSuccess) {
             withContext(Dispatchers.IO) {
                 hrisDao.deleteProfile()
                 hrisDao.insertProfile(call.user!!)
@@ -84,6 +84,34 @@ class HrisRepository @Inject constructor(
             HrisApi.retrofitService.addTimeLogs(
                 userData.value!!.userID,
                 type
+            )
+        }
+
+    suspend fun refreshLeaves(): LeavesModel =
+        withContext(Dispatchers.IO) {
+            val call = HrisApi.retrofitService.getLeaves(
+                userData.value!!.userID
+            )
+            if (call.isSuccess) {
+                hrisDao.deleteLeaves()
+                hrisDao.insertLeaves(call.leaves)
+            }
+            call
+        }
+
+    suspend fun fileLeave(
+        type: String,
+        time: String,
+        dateFrom: String,
+        dateTo: String?
+    ): ResponseModel =
+        withContext(Dispatchers.IO) {
+            HrisApi.retrofitService.fileLeave(
+                userData.value!!.userID,
+                type,
+                dateFrom,
+                dateTo,
+                time
             )
         }
 }

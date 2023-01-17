@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtLeaveDate" />
 
     <TextView
-        android:id="@+id/txtSL"
+        android:id="@+id/txtNoOfDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/views_margin"
