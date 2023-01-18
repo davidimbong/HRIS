@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,9 @@ class FileLeaveFragment : Fragment() {
     private lateinit var binding: FragmentFileLeaveBinding
     private val viewModel: FileLeaveViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private var type = ""
+    private var startDate: String? = ""
+    private var endDate: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,32 +43,9 @@ class FileLeaveFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var type = ""
-        var startDate: String? = ""
-        var endDate: String? = ""
         var leaveType = ""
 
-        val mCalendar = Calendar.getInstance()
-        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            if (type == getString(R.string.start_date)) {
-                startDate = "${month + 1}/$dayOfMonth/$year"
-                binding.btnStartDate.text = startDate!!.convertDateMonthDayYear()
-            } else {
-                endDate = "${month + 1}/$dayOfMonth/$year"
-                binding.btnEndDate.text = endDate!!.convertDateMonthDayYear()
-            }
-        }
-
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            datePicker,
-            mCalendar.get(Calendar.YEAR),
-            mCalendar.get(Calendar.MONTH),
-            mCalendar.get(Calendar.DAY_OF_MONTH)
-        ).apply {
-            this.datePicker.minDate = System.currentTimeMillis()
-        }
+        val datePickerDialog = createDatePickerDialog()
 
         binding.vacationLeave.setOnClickListener {
             viewModel.type = "1"
@@ -127,9 +108,6 @@ class FileLeaveFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                startDate = null
-                endDate = null
-
                 if (position == 0) {
                     setViewsVisibility(true)
                 } else {
@@ -144,18 +122,43 @@ class FileLeaveFragment : Fragment() {
     }
 
     private fun setViewsVisibility(boolean: Boolean) {
-        binding.btnStartDate.text = getString(R.string.select_date)
-        binding.btnEndDate.text = getString(R.string.select_date)
-        if (boolean) {
-            binding.view4.visibility = View.VISIBLE
-            binding.btnEndDate.visibility = View.VISIBLE
-            binding.txtEndDate.visibility = View.VISIBLE
-            binding.txtStartDate.text = getString(R.string.start_date)
-        } else {
-            binding.view4.visibility = View.INVISIBLE
-            binding.btnEndDate.visibility = View.INVISIBLE
-            binding.txtEndDate.visibility = View.INVISIBLE
-            binding.txtStartDate.text = getString(R.string.date_)
+        startDate = null
+        endDate = null
+        binding.apply {
+            btnStartDate.text = getString(R.string.select_date)
+            btnEndDate.text = getString(R.string.select_date)
+            view4.isVisible = boolean
+            btnEndDate.isVisible = boolean
+            txtEndDate.isVisible = boolean
+
+            if (boolean) {
+                txtStartDate.text = getString(R.string.start_date)
+            } else {
+                txtStartDate.text = getString(R.string.date_)
+            }
+        }
+    }
+
+    fun createDatePickerDialog(): DatePickerDialog {
+        val mCalendar = Calendar.getInstance()
+        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            if (type == getString(R.string.start_date)) {
+                startDate = "${month + 1}/$dayOfMonth/$year"
+                binding.btnStartDate.text = startDate!!.convertDateMonthDayYear()
+            } else {
+                endDate = "${month + 1}/$dayOfMonth/$year"
+                binding.btnEndDate.text = endDate!!.convertDateMonthDayYear()
+            }
+        }
+
+        return DatePickerDialog(
+            requireContext(),
+            datePicker,
+            mCalendar.get(Calendar.YEAR),
+            mCalendar.get(Calendar.MONTH),
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            this.datePicker.minDate = System.currentTimeMillis()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.hris.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.hris.convertDateMonthDay
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
@@ -20,4 +21,16 @@ data class Leaves(
     val dateFrom: String,
     val dateTo: String?,
     val time: String
-) : Parcelable
+) : Parcelable {
+    fun checkDates(): String {
+        return if (dateTo != null && dateTo != dateFrom) {
+            "${dateFrom.convertDateMonthDay()} to ${dateTo.convertDateMonthDay()}"
+        } else {
+            dateFrom.convertDateMonthDay()
+        }
+    }
+
+    fun isVacationLeave(): Boolean {
+        return type == "1"
+    }
+}

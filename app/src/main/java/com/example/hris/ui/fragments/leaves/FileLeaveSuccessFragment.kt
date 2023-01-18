@@ -31,10 +31,12 @@ class FileLeaveSuccessFragment : Fragment() {
         val leave = args.leave
         setViewsVisibility(leave.time)
 
-        binding.type.text = leave.type
-        binding.time.text = leave.time
-        binding.StartDate.text = leave.dateFrom.convertDateMonthDayYear()
-        binding.EndDate.text = leave.dateTo?.convertDateMonthDayYear()
+        binding.apply {
+            type.text = leave.type
+            time.text = leave.time
+            StartDate.text = leave.dateFrom.convertDateMonthDayYear()
+            EndDate.text = leave.dateTo?.convertDateMonthDayYear()
+        }
 
         binding.btnOk.setOnClickListener {
             findNavController().navigate(FileLeaveSuccessFragmentDirections.actionFileLeaveSuccessFragmentToLeavesFragment())
