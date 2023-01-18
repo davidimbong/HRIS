@@ -12,13 +12,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.convertToNoDecimalString
 import com.example.hris.databinding.FragmentLeavesBinding
+import com.example.hris.ui.adapters.LeaveTypeListener
 import com.example.hris.ui.adapters.LeavesListAdapter
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.leaves.LeavesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LeavesFragment : Fragment() {
+class LeavesFragment : Fragment(), LeaveTypeListener {
     private val viewModel: LeavesViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by activityViewModels()
     private lateinit var binding: FragmentLeavesBinding
@@ -51,7 +52,7 @@ class LeavesFragment : Fragment() {
         }
 
         viewModel.leaves.observe(viewLifecycleOwner) {
-            val adapter = LeavesListAdapter(it, viewModel)
+            val adapter = LeavesListAdapter(it, this)
             binding.leavesRecyclerView.adapter = adapter
         }
 
@@ -61,6 +62,15 @@ class LeavesFragment : Fragment() {
 
         viewModel.totalSickLeaves.observe(viewLifecycleOwner) {
             binding.txtSL.text = it.convertToNoDecimalString()
+        }
+    }
+
+    override fun setTotalLeaves(isVacationLeave: Boolean, days: Double) {
+        if (isVacationLeave) {
+            viewModel.totalVacationLeaves.value =
+                viewModel.totalVacationLeaves.value!! - days
+        } else {
+            viewModel.totalSickLeaves.value = viewModel.totalSickLeaves.value!! - days
         }
     }
 }

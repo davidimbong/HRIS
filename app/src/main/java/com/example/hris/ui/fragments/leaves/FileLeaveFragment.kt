@@ -121,17 +121,17 @@ class FileLeaveFragment : Fragment() {
         }
     }
 
-    private fun setViewsVisibility(boolean: Boolean) {
+    private fun setViewsVisibility(isVisible: Boolean) {
         startDate = null
         endDate = null
         binding.apply {
             btnStartDate.text = getString(R.string.select_date)
             btnEndDate.text = getString(R.string.select_date)
-            view4.isVisible = boolean
-            btnEndDate.isVisible = boolean
-            txtEndDate.isVisible = boolean
+            view4.isVisible = isVisible
+            btnEndDate.isVisible = isVisible
+            txtEndDate.isVisible = isVisible
 
-            if (boolean) {
+            if (isVisible) {
                 txtStartDate.text = getString(R.string.start_date)
             } else {
                 txtStartDate.text = getString(R.string.date_)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -29,7 +30,7 @@ class FileLeaveSuccessFragment : Fragment() {
 
         val args by navArgs<FileLeaveSuccessFragmentArgs>()
         val leave = args.leave
-        setViewsVisibility(leave.time)
+        setViewsVisibility(leave.isVacationLeave())
 
         binding.apply {
             type.text = leave.type
@@ -44,17 +45,17 @@ class FileLeaveSuccessFragment : Fragment() {
 
     }
 
-    private fun setViewsVisibility(time: String) {
-        if (time == "1") {
-            binding.view4.visibility = View.VISIBLE
-            binding.EndDate.visibility = View.VISIBLE
-            binding.txtEndDate.visibility = View.VISIBLE
-            binding.txtStartDate.text = getString(R.string.start_date)
-        } else {
-            binding.view5.visibility = View.INVISIBLE
-            binding.EndDate.visibility = View.INVISIBLE
-            binding.txtEndDate.visibility = View.INVISIBLE
-            binding.txtStartDate.text = getString(R.string.date_)
+    private fun setViewsVisibility(isVisible: Boolean) {
+        binding.apply {
+            view4.isVisible = isVisible
+            EndDate.isVisible = isVisible
+            txtEndDate.isVisible = isVisible
+
+            if (isVisible) {
+                txtStartDate.text = getString(R.string.start_date)
+            } else {
+                txtStartDate.text = getString(R.string.date_)
+            }
         }
     }
 }

@@ -12,8 +12,8 @@ import com.example.hris.ui.viewmodels.leaves.LeavesViewModel
 
 class LeavesListAdapter(
     private val list: List<Leaves>,
-    private val viewModel: LeavesViewModel
-) : RecyclerView.Adapter<LeavesListAdapter.LeavesViewHolder>(), LeaveTypeListener {
+    private val leaveTypeListener: LeaveTypeListener
+) : RecyclerView.Adapter<LeavesListAdapter.LeavesViewHolder>() {
 
     class LeavesViewHolder(private var binding: LeavesListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -52,20 +52,11 @@ class LeavesListAdapter(
 
     override fun onBindViewHolder(holder: LeavesViewHolder, position: Int) {
         val leave = list[position]
-        holder.bind(leave, this)
+        holder.bind(leave, leaveTypeListener)
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    override fun setTotalLeaves(isVacationLeave: Boolean, days: Double) {
-        if (isVacationLeave) {
-            viewModel.totalVacationLeaves.value =
-                viewModel.totalVacationLeaves.value!! - days
-        } else {
-            viewModel.totalSickLeaves.value = viewModel.totalSickLeaves.value!! - days
-        }
     }
 
 }
