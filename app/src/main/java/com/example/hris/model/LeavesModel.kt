@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.hris.convertDateMonthDay
+import com.example.hris.getNumberOfDaysInBetween
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
@@ -32,5 +33,13 @@ data class Leaves(
 
     fun isVacationLeave(): Boolean {
         return type == "1"
+    }
+
+    fun getDaysInBetween(): Double {
+        return if (dateTo != null) {
+            dateFrom.getNumberOfDaysInBetween(dateTo)
+        } else {
+            0.5
+        }
     }
 }

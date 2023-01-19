@@ -2,6 +2,7 @@ package com.example.hris.ui.viewmodels.leaves
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hris.getNumberOfDaysInBetween
@@ -20,8 +21,28 @@ class LeavesViewModel @Inject constructor(
     val leaves = MutableLiveData<List<Leaves>>()
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
-    val totalVacationLeavesLeft = MutableLiveData<Double>()
-    val totalSickLeavesLeft = MutableLiveData<Double>()
+    val totalVacationLeavesLeft = MediatorLiveData<Double>()
+    val totalSickLeavesLeft = MediatorLiveData<Double>()
+
+    init {
+        totalVacationLeavesLeft.addSource(leaves) {
+            totalVacationLeavesLeft.value =
+                13.0 - it.filter { leave ->
+                    leave.isVacationLeave()
+                }.sumOf { leave ->
+                    leave.getDaysInBetween()
+                }
+        }
+
+        totalSickLeavesLeft.addSource(leaves) {
+            totalSickLeavesLeft.value =
+                13.0 - it.filter { leave ->
+                    !leave.isVacationLeave()
+                }.sumOf { leave ->
+                    leave.getDaysInBetween()
+                }
+        }
+    }
 
     fun callLeaves() {
         viewModelScope.launch {
@@ -30,31 +51,10 @@ class LeavesViewModel @Inject constructor(
 
             if (call.isSuccess) {
                 leaves.value = call.leaves
-                setTotalLeavesLeft()
             } else {
                 message.value = call.message!!
             }
             loadingDialogState.value = false
         }
-    }
-
-    private fun setTotalLeavesLeft() {
-        var totalVacationLeaves = 13.0
-        var totalSickLeaves = 13.0
-        leaves.value!!.forEach {
-            val days: Double = if (it.dateTo != null) {
-                it.dateFrom.getNumberOfDaysInBetween(it.dateTo)
-            } else {
-                0.5
-            }
-            if (it.isVacationLeave()) {
-                totalVacationLeaves -= days
-            } else {
-                totalSickLeaves -= days
-            }
-        }
-
-        totalVacationLeavesLeft.value = totalVacationLeaves
-        totalSickLeavesLeft.value = totalSickLeaves
     }
 }
