@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/layout_double_margin"
         android:layout_marginTop="@dimen/layout_double_margin"
-        android:text="@string/addTimelogSuccess"
+        android:text="@string/addTimeLogSuccess"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/success_text_size"

@@ -1,5 +1,6 @@
 package com.example.hris.network
 
+import com.example.hris.model.LeavesModel
 import com.example.hris.model.LoginModel
 import com.example.hris.model.ResponseModel
 import com.example.hris.model.TimeLogsModel
@@ -63,9 +64,24 @@ interface HrisApiService {
         @Field("userID") userID: String,
         @Field("type") type: String
     ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("AppTrainingGetLeaves.htm")
+    suspend fun getLeaves(
+        @Field("userID") userID: String
+    ): LeavesModel
+
+    @FormUrlEncoded
+    @POST("AppTrainingAddLeave.htm")
+    suspend fun fileLeave(
+        @Field("userID") userID: String,
+        @Field("type") type: String,
+        @Field("dateFrom") dateFrom: String,
+        @Field("dateTo") dateTo: String?,
+        @Field("time") time: String
+    ): ResponseModel
 }
 
 object HrisApi {
     val retrofitService: HrisApiService by lazy { retrofit.create(HrisApiService::class.java) }
-
 }

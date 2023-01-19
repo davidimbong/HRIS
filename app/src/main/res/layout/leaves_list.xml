@@ -8,9 +8,8 @@
         android:id="@+id/txtLeaveDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
         android:layout_marginTop="@dimen/views_margin"
-        android:layout_marginStart="@dimen/layout_margin"
-        android:text="July 25"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,18 +19,17 @@
         android:id="@+id/txtLeaveType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/layout_margin"
-        android:text="@string/sick_leave"
+        android:layout_marginStart="@dimen/text_margin"
         android:textSize="@dimen/header_text_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLeaveDate" />
 
     <TextView
-        android:id="@+id/txtSL"
+        android:id="@+id/txtNoOfDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/views_margin"
-        android:text="12.5"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toTopOf="@+id/view2"
@@ -55,7 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLeaveType" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,10 @@
         <item>Break in</item>
         <item>Time out</item>
     </string-array>
+
+    <string-array name="fileLeaveSpinnerItems">
+        <item>Whole day</item>
+        <item>Morning</item>
+        <item>Afternoon</item>
+    </string-array>
 </resources>

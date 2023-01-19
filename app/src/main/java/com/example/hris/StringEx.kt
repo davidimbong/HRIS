@@ -1,11 +1,9 @@
 package com.example.hris
 
-import android.graphics.Color
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 fun String.convertToPhone(): String {
@@ -86,16 +84,27 @@ fun String.convertDateMonthDay(): String {
     return sb.toString()
 }
 
+fun String.convertDateMonthDayYear(): String {
+    val list = this.split('/')
+    val sb = StringBuilder()
+    sb.append(DateFormatSymbols().months[list[0].toInt() - 1])
+    sb.append(" ")
+    sb.append(list[1].toInt().toString())
+    sb.append(", ")
+    sb.append(list[2])
+    return sb.toString()
+}
+
 fun String.convertTime24to12(): String {
     val list = this.split(':')
     val sb = StringBuilder()
     sb.append(list[0].toInt().toString())
     sb.append(":")
     sb.append(list[1])
-    val _24HFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-    val _12HFormatter = SimpleDateFormat("h:mm a", Locale.getDefault())
-    val time = _24HFormatter.parse(sb.toString())
-    return _12HFormatter.format(time!!).toString()
+    val formatter24H = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val formatter12H = SimpleDateFormat("h:mm a", Locale.getDefault())
+    val time = formatter24H.parse(sb.toString())
+    return formatter12H.format(time!!).toString()
 }
 
 fun String?.timeNullChecker(): String {
@@ -107,7 +116,15 @@ fun String?.timeNullChecker(): String {
 
 fun String?.textColorSetter(): Int {
     if (this.isNullOrEmpty()) {
-        return Color.parseColor("#880808")
+        return R.color.red
     }
-    return Color.parseColor("#000000")
+    return R.color.black
+}
+
+fun String.getNumberOfDaysInBetween(dateTo: String): Double {
+    val sdf = SimpleDateFormat("mm/dd/yy", Locale.getDefault())
+    val milliseconds = sdf.parse(dateTo)!!.time - sdf.parse(this)!!.time
+    val days = TimeUnit.MILLISECONDS.toDays(milliseconds) + 1
+
+    return days.toDouble()
 }

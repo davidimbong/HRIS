@@ -27,6 +27,7 @@ object DatabaseModule {
             appContext,
             HrisDatabase::class.java,
             "hris_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 }
