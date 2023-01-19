@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.hris.getNumberOfDaysInBetween
 import com.example.hris.model.Leaves
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +20,8 @@ class LeavesViewModel @Inject constructor(
     val leaves = MutableLiveData<List<Leaves>>()
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
-    val totalVacationLeaves = MutableLiveData<Double>()
-    val totalSickLeaves = MutableLiveData<Double>()
+    val totalVacationLeavesLeft = MutableLiveData<Double>()
+    val totalSickLeavesLeft = MutableLiveData<Double>()
 
     fun callLeaves() {
         viewModelScope.launch {
@@ -29,12 +30,31 @@ class LeavesViewModel @Inject constructor(
 
             if (call.isSuccess) {
                 leaves.value = call.leaves
+                setTotalLeavesLeft()
             } else {
                 message.value = call.message!!
             }
             loadingDialogState.value = false
         }
-        totalVacationLeaves.value = 13.0
-        totalSickLeaves.value = 13.0
+    }
+
+    private fun setTotalLeavesLeft() {
+        var totalVacationLeaves = 13.0
+        var totalSickLeaves = 13.0
+        leaves.value!!.forEach {
+            val days: Double = if (it.dateTo != null) {
+                it.dateFrom.getNumberOfDaysInBetween(it.dateTo)
+            } else {
+                0.5
+            }
+            if (it.isVacationLeave()) {
+                totalVacationLeaves -= days
+            } else {
+                totalSickLeaves -= days
+            }
+        }
+
+        totalVacationLeavesLeft.value = totalVacationLeaves
+        totalSickLeavesLeft.value = totalSickLeaves
     }
 }

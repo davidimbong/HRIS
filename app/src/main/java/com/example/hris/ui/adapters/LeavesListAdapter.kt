@@ -8,17 +8,15 @@ import com.example.hris.convertToNoDecimalString
 import com.example.hris.databinding.LeavesListBinding
 import com.example.hris.getNumberOfDaysInBetween
 import com.example.hris.model.Leaves
-import com.example.hris.ui.viewmodels.leaves.LeavesViewModel
 
 class LeavesListAdapter(
     private val list: List<Leaves>,
-    private val leaveTypeListener: LeaveTypeListener
 ) : RecyclerView.Adapter<LeavesListAdapter.LeavesViewHolder>() {
 
     class LeavesViewHolder(private var binding: LeavesListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(leaves: Leaves, callback: LeaveTypeListener) {
+        fun bind(leaves: Leaves) {
             binding.txtLeaveDate.text = leaves.checkDates()
 
             binding.txtNoOfDays.apply {
@@ -36,8 +34,6 @@ class LeavesListAdapter(
                     binding.txtLeaveType.text = context.getString(R.string.sick_leave)
                 }
 
-                callback.setTotalLeaves(leaves.isVacationLeave(), days)
-
                 text = days.convertToNoDecimalString()
             }
         }
@@ -52,15 +48,11 @@ class LeavesListAdapter(
 
     override fun onBindViewHolder(holder: LeavesViewHolder, position: Int) {
         val leave = list[position]
-        holder.bind(leave, leaveTypeListener)
+        holder.bind(leave)
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-}
-
-interface LeaveTypeListener {
-    fun setTotalLeaves(isVacationLeave: Boolean, days: Double)
 }

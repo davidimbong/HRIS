@@ -12,14 +12,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.hris.R
 import com.example.hris.convertToNoDecimalString
 import com.example.hris.databinding.FragmentLeavesBinding
-import com.example.hris.ui.adapters.LeaveTypeListener
 import com.example.hris.ui.adapters.LeavesListAdapter
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.leaves.LeavesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LeavesFragment : Fragment(), LeaveTypeListener {
+class LeavesFragment : Fragment() {
     private val viewModel: LeavesViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by activityViewModels()
     private lateinit var binding: FragmentLeavesBinding
@@ -52,25 +51,16 @@ class LeavesFragment : Fragment(), LeaveTypeListener {
         }
 
         viewModel.leaves.observe(viewLifecycleOwner) {
-            val adapter = LeavesListAdapter(it, this)
+            val adapter = LeavesListAdapter(it)
             binding.leavesRecyclerView.adapter = adapter
         }
 
-        viewModel.totalVacationLeaves.observe(viewLifecycleOwner) {
+        viewModel.totalVacationLeavesLeft.observe(viewLifecycleOwner) {
             binding.txtVL.text = it.convertToNoDecimalString()
         }
 
-        viewModel.totalSickLeaves.observe(viewLifecycleOwner) {
+        viewModel.totalSickLeavesLeft.observe(viewLifecycleOwner) {
             binding.txtSL.text = it.convertToNoDecimalString()
-        }
-    }
-
-    override fun setTotalLeaves(isVacationLeave: Boolean, days: Double) {
-        if (isVacationLeave) {
-            viewModel.totalVacationLeaves.value =
-                viewModel.totalVacationLeaves.value!! - days
-        } else {
-            viewModel.totalSickLeaves.value = viewModel.totalSickLeaves.value!! - days
         }
     }
 }
