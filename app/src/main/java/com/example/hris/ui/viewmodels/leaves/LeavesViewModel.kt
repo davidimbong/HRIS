@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.hris.getNumberOfDaysInBetween
 import com.example.hris.model.Leaves
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

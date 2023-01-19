@@ -30,7 +30,7 @@ class FileLeaveSuccessFragment : Fragment() {
 
         val args by navArgs<FileLeaveSuccessFragmentArgs>()
         val leave = args.leave
-        setViewsVisibility(leave.isVacationLeave())
+        setViewsVisibility(leave.isMultipleDays())
 
         binding.apply {
             type.text = leave.type

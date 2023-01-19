@@ -55,12 +55,12 @@ class LeavesFragment : Fragment() {
             binding.leavesRecyclerView.adapter = adapter
         }
 
-        viewModel.totalSickLeavesLeft.observe(viewLifecycleOwner) {
-            binding.txtSL.text = it.convertToNoDecimalString()
-        }
-
         viewModel.totalVacationLeavesLeft.observe(viewLifecycleOwner) {
             binding.txtVL.text = it.convertToNoDecimalString()
+        }
+
+        viewModel.totalSickLeavesLeft.observe(viewLifecycleOwner) {
+            binding.txtSL.text = it.convertToNoDecimalString()
         }
     }
 }

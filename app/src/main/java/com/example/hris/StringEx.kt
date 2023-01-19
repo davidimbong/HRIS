@@ -122,7 +122,7 @@ fun String?.textColorSetter(): Int {
 }
 
 fun String.getNumberOfDaysInBetween(dateTo: String): Double {
-    val sdf = SimpleDateFormat("dd/mm/yy", Locale.getDefault())
+    val sdf = SimpleDateFormat("mm/dd/yy", Locale.getDefault())
     val milliseconds = sdf.parse(dateTo)!!.time - sdf.parse(this)!!.time
     val days = TimeUnit.MILLISECONDS.toDays(milliseconds) + 1
 

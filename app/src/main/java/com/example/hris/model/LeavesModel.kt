@@ -42,4 +42,8 @@ data class Leaves(
             0.5
         }
     }
+
+    fun isMultipleDays(): Boolean {
+        return getDaysInBetween() > 1.0
+    }
 }
