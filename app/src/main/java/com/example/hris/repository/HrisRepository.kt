@@ -37,34 +37,36 @@ class HrisRepository @Inject constructor(
         emailAddress: String,
         mobileNumber: String,
         landline: String?
-    ): String {
-        val call = HrisApi.retrofitService.updateProfile(
-            userData.value!!.userID,
-            firstName,
-            middleName,
-            lastName,
-            emailAddress,
-            mobileNumber,
-            landline
-        )
-
-        if (call.isSuccess) {
-            hrisDao.deleteProfile()
-            hrisDao.insertProfile(
-                User(
-                    userData.value!!.userID,
-                    userData.value!!.idNumber,
-                    firstName,
-                    middleName,
-                    lastName,
-                    emailAddress,
-                    mobileNumber,
-                    landline
-                )
+    ): ResponseModel {
+        return withContext(Dispatchers.IO) {
+            val call = HrisApi.retrofitService.updateProfile(
+                userData.value!!.userID,
+                firstName,
+                middleName,
+                lastName,
+                emailAddress,
+                mobileNumber,
+                landline
             )
-        }
 
-        return call.message!!
+            if (call.isSuccess) {
+                hrisDao.deleteProfile()
+                hrisDao.insertProfile(
+                    User(
+                        userData.value!!.userID,
+                        userData.value!!.idNumber,
+                        firstName,
+                        middleName,
+                        lastName,
+                        emailAddress,
+                        mobileNumber,
+                        landline
+                    )
+                )
+            }
+
+            call
+        }
     }
 
     suspend fun refreshTimeLogs(): TimeLogsModel =

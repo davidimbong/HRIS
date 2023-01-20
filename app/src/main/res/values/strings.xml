@@ -61,4 +61,13 @@
     <string name="sick_leave">Sick Leave</string>
     <string name="vacation_leave">Vacation Leave</string>
 
+    <!--  update profile error messages  -->
+    <string name="first_name_error"> First name can not be empty or contain special characters and/or numbers </string>
+    <string name="last_name_error"> Last name can not be empty or contain special characters and/or numbers </string>
+    <string name="middle_name_error"> Middle name can not contain special characters and/or numbers </string>
+    <string name="mobile_number_error"> Invalid mobile phone number </string>
+    <string name="email_address_error"> Invalid email address format </string>
+    <string name="landline_number_error"> Invalid landline number (2 digit Area code + 8 + 7 digit number) </string>
+
+
 </resources>

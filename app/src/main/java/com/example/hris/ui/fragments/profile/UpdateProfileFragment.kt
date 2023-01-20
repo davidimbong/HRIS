@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.hris.R
-import com.example.hris.convertToPhone
+import com.example.hris.convertToLocalPhone
+import com.example.hris.convertToInternationalLandlineNumber
+import com.example.hris.convertToInternationalPhoneNumber
+import com.example.hris.convertToLocalLandline
 import com.example.hris.databinding.FragmentUpdateProfileBinding
 import com.example.hris.ui.viewmodels.MainActivityViewModel
 import com.example.hris.ui.viewmodels.profile.UpdateProfileViewModel
@@ -21,14 +23,6 @@ class UpdateProfileFragment : Fragment() {
     private lateinit var binding: FragmentUpdateProfileBinding
     private val viewModel: UpdateProfileViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by viewModels()
-
-//    private val loadingDialog: Dialog by lazy {
-//        Dialog(requireContext()).apply {
-//            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            this.setCancelable(false)
-//            this.setContentView(R.layout.api_calling_dialog)
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,34 +36,31 @@ class UpdateProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnUpdate.setOnClickListener {
-//            viewModel.updateProfile(
-//                binding.txtFirstName.text.toString(),
-//                binding.txtMiddleName.text.toString(),
-//                binding.txtLastName.text.toString(),
-//                binding.txtEmail.text.toString(),
-//                binding.txtMobileNumber.text.toString().convertToLocalPhone(),
-//                binding.txtLandLine.text.toString()
-//            )
-            findNavController().navigate(R.id.action_updateProfileFragment_to_updateProfileSuccessFragment)
+            viewModel.updateProfile(
+                binding.txtFirstName.text.toString(),
+                binding.txtMiddleName.text.toString(),
+                binding.txtLastName.text.toString(),
+                binding.txtEmail.text.toString(),
+                binding.txtMobileNumber.text.toString().convertToLocalPhone(),
+                binding.txtLandLine.text.toString().convertToLocalLandline(),
+                requireContext()
+            )
         }
 
         viewModel.userData.observe(viewLifecycleOwner) {
             binding.apply {
                 txtIdNumber.isEnabled = false
-
-                val phoneNumber = it.mobileNumber.convertToPhone()
-
                 if (!it.middleName.isNullOrEmpty())
                     txtMiddleName.setText(it.middleName)
 
                 if (!it.landline.isNullOrEmpty())
-                    txtLandLine.setText(it.landline)
+                    txtLandLine.setText(it.landline.convertToInternationalLandlineNumber())
 
                 txtFirstName.setText(it.firstName)
                 txtLastName.setText(it.lastName)
                 txtIdNumber.setText(it.idNumber)
                 txtEmail.setText(it.emailAddress)
-                txtMobileNumber.setText(phoneNumber)
+                txtMobileNumber.setText(it.mobileNumber.convertToInternationalPhoneNumber())
             }
         }
 
@@ -79,6 +70,10 @@ class UpdateProfileFragment : Fragment() {
 
         viewModel.message.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.isSuccessfull.observe(viewLifecycleOwner) {
+            findNavController().navigate(UpdateProfileFragmentDirections.actionUpdateProfileFragmentToUpdateProfileSuccessFragment())
         }
     }
 }
