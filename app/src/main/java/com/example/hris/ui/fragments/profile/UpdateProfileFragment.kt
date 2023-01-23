@@ -37,13 +37,13 @@ class UpdateProfileFragment : Fragment() {
 
         binding.btnUpdate.setOnClickListener {
             viewModel.updateProfile(
-                binding.txtFirstName.text.toString(),
-                binding.txtMiddleName.text.toString(),
-                binding.txtLastName.text.toString(),
-                binding.txtEmail.text.toString(),
-                binding.txtMobileNumber.text.toString().convertToLocalPhone(),
-                binding.txtLandLine.text.toString().convertToLocalLandline(),
-                requireContext()
+                firstName = binding.txtFirstName.text.toString(),
+                middleName = binding.txtMiddleName.text.toString(),
+                lastName = binding.txtLastName.text.toString(),
+                emailAddress = binding.txtEmail.text.toString(),
+                mobileNumber = binding.txtMobileNumber.text.toString().convertToLocalPhone(),
+                landline = binding.txtLandLine.text.toString().convertToLocalLandline(),
+                context = requireContext()
             )
         }
 

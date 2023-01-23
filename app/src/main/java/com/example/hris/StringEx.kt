@@ -28,12 +28,7 @@ fun String.convertToInternationalLandlineNumber(): String {
 
     this.forEachIndexed { index, c ->
         sb.append(c)
-        if (index > 0) {
-            if (index % 4 == 1 && this.count() - index > 2) {
-                sb.append(" ")
-            }
-        }
-        if (index == 1) {
+        if (index % 4 == 1 && this.count() - index > 2 || index == 1) {
             sb.append(" ")
         }
     }
@@ -59,9 +54,6 @@ fun String.convertToLocalLandline(): String {
     val list = this.removePrefix("+63").split(' ')
     val sb = StringBuilder()
 
-    if (!list[0].startsWith("0")) {
-        sb.append("0")
-    }
     list.forEach { s ->
         sb.append(s)
     }

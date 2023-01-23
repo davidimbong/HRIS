@@ -32,19 +32,16 @@ class UpdateProfileViewModel @Inject constructor(
         landline: String?,
         context: Context
     ) {
-        if (!nameIsValid(firstName)) {
-            message.value = context.getString(R.string.first_name_error)
-        } else if (!middleNameIsValid(middleName)) {
-            message.value = context.getString(R.string.middle_name_error)
-        } else if (!nameIsValid(lastName)) {
-            message.value = context.getString(R.string.last_name_error)
-        } else if (!emailIsValid(emailAddress)) {
-            message.value = context.getString(R.string.email_address_error)
-        } else if (!mobileNumberIsValid(mobileNumber)) {
-            message.value = context.getString(R.string.mobile_number_error)
-        } else if (!landlineNumberIsValid(landline)) {
-            message.value = context.getString(R.string.landline_number_error)
-        } else {
+        if (areInputsValid(
+                firstName,
+                middleName,
+                lastName,
+                emailAddress,
+                mobileNumber,
+                landline,
+                context
+            )
+        ) {
             viewModelScope.launch {
                 loadingDialogState.value = true
                 val call = hrisRepository.updateProfile(
@@ -66,31 +63,30 @@ class UpdateProfileViewModel @Inject constructor(
         }
     }
 
-    private fun nameIsValid(name: String): Boolean {
-        return Regex("^([A-Za-z\\s]+$)").matches(name)
-    }
-
-    private fun middleNameIsValid(name: String?): Boolean {
-        return if (name.isNullOrEmpty()) {
-            true
+    private fun areInputsValid(
+        firstName: String,
+        middleName: String?,
+        lastName: String,
+        emailAddress: String,
+        mobileNumber: String,
+        landline: String?,
+        context: Context
+    ): Boolean {
+        if (!Regex("^([A-Za-z\\s]+$)").matches(firstName)) {
+            message.value = context.getString(R.string.first_name_error)
+        } else if (!Regex("^([A-Za-z\\s]+$)").matches(middleName!!)) {
+            message.value = context.getString(R.string.middle_name_error)
+        } else if (!Regex("^([A-Za-z\\s]+$)").matches(lastName)) {
+            message.value = context.getString(R.string.last_name_error)
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
+            message.value = context.getString(R.string.email_address_error)
+        } else if (!Regex("^(09[0-9]{9}$)").matches(mobileNumber)) {
+            message.value = context.getString(R.string.mobile_number_error)
+        } else if (!Regex("^(0[0-9]{9}$)").matches(landline!!)) {
+            message.value = context.getString(R.string.landline_number_error)
         } else {
-            Regex("^([A-Za-z\\s]+$)").matches(name)
+            return true
         }
-    }
-
-    private fun emailIsValid(emailAddress: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()
-    }
-
-    private fun mobileNumberIsValid(mobileNumber: String): Boolean {
-        return Regex("^(09[0-9]{9}$)").matches(mobileNumber)
-    }
-
-    private fun landlineNumberIsValid(landline: String?): Boolean {
-        return if (landline.isNullOrEmpty()) {
-            true
-        } else {
-            Regex("^(0[0-9]{10}$)").matches(landline)
-        }
+        return false
     }
 }

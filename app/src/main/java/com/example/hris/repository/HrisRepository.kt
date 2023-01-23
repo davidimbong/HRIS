@@ -23,8 +23,7 @@ class HrisRepository @Inject constructor(
 
         if (call.isSuccess) {
             withContext(Dispatchers.IO) {
-                hrisDao.deleteProfile()
-                hrisDao.insertProfile(call.user!!)
+                hrisDao.updateProfile(call.user!!)
             }
         }
         return call
@@ -50,8 +49,7 @@ class HrisRepository @Inject constructor(
             )
 
             if (call.isSuccess) {
-                hrisDao.deleteProfile()
-                hrisDao.insertProfile(
+                hrisDao.updateProfile(
                     User(
                         userData.value!!.userID,
                         userData.value!!.idNumber,
@@ -75,8 +73,7 @@ class HrisRepository @Inject constructor(
                 userData.value!!.userID
             )
             if (call.isSuccess) {
-                hrisDao.deleteTimeLogs()
-                hrisDao.insertTimeLogs(call.timeLogs!!)
+                hrisDao.updateTimeLogs(call.timeLogs!!)
             }
             call
         }
