@@ -21,7 +21,7 @@ class UpdateProfileViewModel @Inject constructor(
     val userData = hrisRepository.userData
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
-    val isSuccessfull = MutableLiveData<Unit>()
+    val isSuccessful = MutableLiveData<Unit>()
 
     fun updateProfile(
         firstName: String,
@@ -33,28 +33,28 @@ class UpdateProfileViewModel @Inject constructor(
         context: Context
     ) {
         if (areInputsValid(
-                firstName,
-                middleName,
-                lastName,
-                emailAddress,
-                mobileNumber,
-                landline,
-                context
+                firstName = firstName,
+                middleName = middleName,
+                lastName = lastName,
+                emailAddress = emailAddress,
+                mobileNumber = mobileNumber,
+                landline = landline,
+                context = context
             )
         ) {
             viewModelScope.launch {
                 loadingDialogState.value = true
                 val call = hrisRepository.updateProfile(
-                    firstName,
-                    middleName,
-                    lastName,
-                    emailAddress,
-                    mobileNumber,
-                    landline
+                    firstName = firstName,
+                    middleName = middleName,
+                    lastName = lastName,
+                    emailAddress = emailAddress,
+                    mobileNumber = mobileNumber,
+                    landline = landline,
                 )
 
                 if (call.isSuccess) {
-                    isSuccessfull.value = Unit
+                    isSuccessful.value = Unit
                 } else {
                     message.value = call.message!!
                 }

@@ -72,7 +72,7 @@ class UpdateProfileFragment : Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.isSuccessfull.observe(viewLifecycleOwner) {
+        viewModel.isSuccessful.observe(viewLifecycleOwner) {
             findNavController().navigate(UpdateProfileFragmentDirections.actionUpdateProfileFragmentToUpdateProfileSuccessFragment())
         }
     }

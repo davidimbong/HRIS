@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(
     fun userLogin(username: String, password: String) {
         viewModelScope.launch {
             loadingDialogState.value = true
-            val loginResponse = hrisRepository.login(username, password)
+            val loginResponse = hrisRepository.login(username = username, password = password)
             loadingDialogState.value = false
 
             if (loginResponse.isSuccess) {

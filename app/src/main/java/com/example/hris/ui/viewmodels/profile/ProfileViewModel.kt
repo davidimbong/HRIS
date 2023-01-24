@@ -34,7 +34,13 @@ class ProfileViewModel @Inject constructor(
             val email = it.emailAddress.hideEmail()
             val phoneNumber = it.mobileNumber.convertToInternationalPhoneNumber().hidePhoneNumber()
 
-            userProfile.value = Profile(initials, name, idNumber, email, phoneNumber)
+            userProfile.value = Profile(
+                initials = initials,
+                name = name,
+                idNumber = idNumber,
+                emailAddress = email,
+                mobileNumber = phoneNumber
+            )
         }
     }
 }

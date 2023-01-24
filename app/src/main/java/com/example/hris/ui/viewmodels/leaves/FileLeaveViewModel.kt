@@ -25,10 +25,10 @@ class FileLeaveViewModel @Inject constructor(
             viewModelScope.launch {
                 loadingDialogState.value = true
                 val call = hrisRepository.fileLeave(
-                    type,
-                    time.toString(),
-                    dateFrom!!,
-                    dateTo
+                    type =  type,
+                    time = time.toString(),
+                    dateFrom =  dateFrom!!,
+                    dateTo = dateTo
                 )
 
                 if (call.isSuccess) {

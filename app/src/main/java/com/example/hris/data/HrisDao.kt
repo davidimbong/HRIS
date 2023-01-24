@@ -39,6 +39,9 @@ interface HrisDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLeaves(leaves: List<Leaves>)
 
+    @Update
+    fun updateLeaves(leaves: List<Leaves>)
+
     @Query("DELETE from leaves")
     fun deleteLeaves()
 }

@@ -92,8 +92,7 @@ class HrisRepository @Inject constructor(
                 userData.value!!.userID
             )
             if (call.isSuccess) {
-                hrisDao.deleteLeaves()
-                hrisDao.insertLeaves(call.leaves)
+                hrisDao.updateLeaves(call.leaves)
             }
             call
         }
