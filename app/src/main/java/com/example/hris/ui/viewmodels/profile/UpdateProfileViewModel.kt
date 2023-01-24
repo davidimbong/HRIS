@@ -74,7 +74,7 @@ class UpdateProfileViewModel @Inject constructor(
     ): Boolean {
         if (!Regex("^([A-Za-z\\s]+$)").matches(firstName)) {
             message.value = context.getString(R.string.first_name_error)
-        } else if (!Regex("^([A-Za-z\\s]+$)").matches(middleName!!)) {
+        } else if (!middleName.isNullOrEmpty() && !Regex("^([A-Za-z\\s]+$)").matches(middleName!!)) {
             message.value = context.getString(R.string.middle_name_error)
         } else if (!Regex("^([A-Za-z\\s]+$)").matches(lastName)) {
             message.value = context.getString(R.string.last_name_error)
@@ -82,7 +82,7 @@ class UpdateProfileViewModel @Inject constructor(
             message.value = context.getString(R.string.email_address_error)
         } else if (!Regex("^(09[0-9]{9}$)").matches(mobileNumber)) {
             message.value = context.getString(R.string.mobile_number_error)
-        } else if (!Regex("^(0[0-9]{9}$)").matches(landline!!)) {
+        } else if (!landline.isNullOrEmpty() && !Regex("^(0[0-9]{9}$)").matches(landline!!)) {
             message.value = context.getString(R.string.landline_number_error)
         } else {
             return true
