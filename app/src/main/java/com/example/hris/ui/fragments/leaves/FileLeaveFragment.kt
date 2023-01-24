@@ -139,7 +139,7 @@ class FileLeaveFragment : Fragment() {
         }
     }
 
-    fun createDatePickerDialog(): DatePickerDialog {
+    private fun createDatePickerDialog(): DatePickerDialog {
         val mCalendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             if (type == getString(R.string.start_date)) {

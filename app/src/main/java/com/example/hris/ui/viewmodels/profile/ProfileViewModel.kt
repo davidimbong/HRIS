@@ -3,7 +3,8 @@ package com.example.hris.ui.viewmodels.profile
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
-import com.example.hris.convertToPhone
+import com.example.hris.convertToInternationalLandlineNumber
+import com.example.hris.convertToInternationalPhoneNumber
 import com.example.hris.hideEmail
 import com.example.hris.hidePhoneNumber
 import com.example.hris.model.Profile
@@ -31,9 +32,15 @@ class ProfileViewModel @Inject constructor(
                             it.lastName.uppercase()
             val idNumber = it.idNumber
             val email = it.emailAddress.hideEmail()
-            val phoneNumber = it.mobileNumber.convertToPhone().hidePhoneNumber()
+            val phoneNumber = it.mobileNumber.convertToInternationalPhoneNumber().hidePhoneNumber()
 
-            userProfile.value = Profile(initials, name, idNumber, email, phoneNumber)
+            userProfile.value = Profile(
+                initials = initials,
+                name = name,
+                idNumber = idNumber,
+                emailAddress = email,
+                mobileNumber = phoneNumber
+            )
         }
     }
 }

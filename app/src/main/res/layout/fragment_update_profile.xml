@@ -26,7 +26,6 @@
         android:background="@drawable/edittext_background"
         android:enabled="false"
         android:padding="@dimen/text_padding"
-        android:text="2022290"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />

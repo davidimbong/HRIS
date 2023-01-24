@@ -6,15 +6,14 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-fun String.convertToPhone(): String {
+fun String.convertToInternationalPhoneNumber(): String {
     val sb = StringBuilder()
     sb.append("+63 ")
+
     this.forEachIndexed { index, c ->
-        if (index == 0) {
-            //skip
-        } else {
+        if (index != 0) {
             sb.append(c)
-            if (index % 3 == 0 && this.count() - index > 3) {
+            if (index % 3 == 0 && this.count() - index > 2) {
                 sb.append(" ")
             }
         }
@@ -23,26 +22,40 @@ fun String.convertToPhone(): String {
     return sb.toString()
 }
 
-fun String.convertToLocalPhone(): String {
-    val list = this.split(' ')
+fun String.convertToInternationalLandlineNumber(): String {
     val sb = StringBuilder()
-    this.removeRange(0, 2)
-    sb.append("0")
-    list.forEach {
-        sb.append(it)
+    sb.append("+63 ")
+
+    this.forEachIndexed { index, c ->
+        sb.append(c)
+        if (index % 4 == 1 && this.count() - index > 2 || index == 1) {
+            sb.append(" ")
+        }
     }
 
     return sb.toString()
 }
 
-fun String.convertToLandline(): String {
+fun String.convertToLocalPhone(): String {
+    val list = this.removePrefix("+63").split(' ')
     val sb = StringBuilder()
-    sb.append("+63 ")
-    this.forEachIndexed { index, c ->
-        if ((index + 1) % 3 == 0 && this.count() - index > 3) {
-            sb.append(" ")
-        }
-        sb.append(c)
+
+    if (!list[0].startsWith("0")) {
+        sb.append("0")
+    }
+    list.forEach { s ->
+        sb.append(s)
+    }
+
+    return sb.toString()
+}
+
+fun String.convertToLocalLandline(): String {
+    val list = this.removePrefix("+63").split(' ')
+    val sb = StringBuilder()
+
+    list.forEach { s ->
+        sb.append(s)
     }
 
     return sb.toString()

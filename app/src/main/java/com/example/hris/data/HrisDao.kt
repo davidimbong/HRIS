@@ -15,6 +15,9 @@ interface HrisDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProfile(user: User)
 
+    @Update
+    fun updateProfile(user: User)
+
     @Query("DELETE from profile_data")
     fun deleteProfile()
 
@@ -24,6 +27,9 @@ interface HrisDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTimeLogs(timeLogs: List<TimeLogs>)
 
+    @Update
+    fun updateTimeLogs(timeLogs: List<TimeLogs>)
+
     @Query("DELETE from time_logs")
     fun deleteTimeLogs()
 
@@ -32,6 +38,9 @@ interface HrisDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLeaves(leaves: List<Leaves>)
+
+    @Update
+    fun updateLeaves(leaves: List<Leaves>)
 
     @Query("DELETE from leaves")
     fun deleteLeaves()

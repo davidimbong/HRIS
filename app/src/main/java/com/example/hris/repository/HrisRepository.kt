@@ -23,8 +23,7 @@ class HrisRepository @Inject constructor(
 
         if (call.isSuccess) {
             withContext(Dispatchers.IO) {
-                hrisDao.deleteProfile()
-                hrisDao.insertProfile(call.user!!)
+                hrisDao.updateProfile(call.user!!)
             }
         }
         return call
@@ -37,34 +36,35 @@ class HrisRepository @Inject constructor(
         emailAddress: String,
         mobileNumber: String,
         landline: String?
-    ): String {
-        val call = HrisApi.retrofitService.updateProfile(
-            userData.value!!.userID,
-            firstName,
-            middleName,
-            lastName,
-            emailAddress,
-            mobileNumber,
-            landline
-        )
-
-        if (call.isSuccess) {
-            hrisDao.deleteProfile()
-            hrisDao.insertProfile(
-                User(
-                    userData.value!!.userID,
-                    userData.value!!.idNumber,
-                    firstName,
-                    middleName,
-                    lastName,
-                    emailAddress,
-                    mobileNumber,
-                    landline
-                )
+    ): ResponseModel {
+        return withContext(Dispatchers.IO) {
+            val call = HrisApi.retrofitService.updateProfile(
+                userData.value!!.userID,
+                firstName,
+                middleName,
+                lastName,
+                emailAddress,
+                mobileNumber,
+                landline
             )
-        }
 
-        return call.message!!
+            if (call.isSuccess) {
+                hrisDao.updateProfile(
+                    User(
+                        userData.value!!.userID,
+                        userData.value!!.idNumber,
+                        firstName,
+                        middleName,
+                        lastName,
+                        emailAddress,
+                        mobileNumber,
+                        landline
+                    )
+                )
+            }
+
+            call
+        }
     }
 
     suspend fun refreshTimeLogs(): TimeLogsModel =
@@ -73,8 +73,7 @@ class HrisRepository @Inject constructor(
                 userData.value!!.userID
             )
             if (call.isSuccess) {
-                hrisDao.deleteTimeLogs()
-                hrisDao.insertTimeLogs(call.timeLogs!!)
+                hrisDao.updateTimeLogs(call.timeLogs!!)
             }
             call
         }
@@ -93,8 +92,7 @@ class HrisRepository @Inject constructor(
                 userData.value!!.userID
             )
             if (call.isSuccess) {
-                hrisDao.deleteLeaves()
-                hrisDao.insertLeaves(call.leaves)
+                hrisDao.updateLeaves(call.leaves)
             }
             call
         }

@@ -1,9 +1,11 @@
 package com.example.hris.ui.fragments.leaves
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -57,5 +59,21 @@ class FileLeaveSuccessFragment : Fragment() {
                 txtStartDate.text = getString(R.string.date_)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(
+                        FileLeaveSuccessFragmentDirections.actionFileLeaveSuccessFragmentToLeavesFragment()
+                    )
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
     }
 }

@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun setLoadingDialog(loading: Boolean) {
+    private fun setLoadingDialog(loading: Boolean) {
         if (loading) {
             loadingDialog.show()
         } else {
