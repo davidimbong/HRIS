@@ -49,13 +49,16 @@ class UpdateProfileViewModel @Inject constructor(
                     mobileNumber = mobileNumber,
                     landline = landline,
                 )
-
-                if (call.isSuccess) {
-                    isSuccessful.value = Unit
+                if (call != null) {
+                    if (call.isSuccess) {
+                        isSuccessful.value = Unit
+                    } else {
+                        message.value = call.message!!
+                    }
+                    loadingDialogState.value = false
                 } else {
-                    message.value = call.message!!
+                    message.value = getApplication<Application>().getString(R.string.network_error)
                 }
-                loadingDialogState.value = false
             }
         }
     }

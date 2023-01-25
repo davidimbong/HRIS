@@ -35,7 +35,8 @@ class AddTimeLogFragment : Fragment() {
             val type = binding.Spinner.selectedItemPosition + 1
 
             viewModel.addTimeLogs(
-                type.toString()
+                type.toString(),
+                requireContext()
             )
         }
 

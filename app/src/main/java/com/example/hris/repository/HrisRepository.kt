@@ -3,8 +3,10 @@ package com.example.hris.repository
 import com.example.hris.data.HrisDao
 import com.example.hris.model.*
 import com.example.hris.network.HrisApi
+import com.example.hris.network.SimpleResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,18 +17,40 @@ class HrisRepository @Inject constructor(
     val userData = hrisDao.getProfile()
     val timeLogs = hrisDao.getTimeLogs()
 
-    suspend fun login(username: String, password: String): LoginModel {
-        val call = HrisApi.retrofitService.getProfile(
-            username,
-            password
-        )
-
-        if (call.isSuccess) {
-            withContext(Dispatchers.IO) {
-                hrisDao.updateProfile(call.user!!)
-            }
+    private inline fun <T> safeApiCall(apiCall: () -> Response<T>): T? {
+        val call = try {
+            SimpleResponse.success(apiCall.invoke())
+        } catch (e: Exception) {
+            SimpleResponse.failure(e)
         }
-        return call
+
+        if (call.failed || !call.isSuccesful) {
+            return null
+        }
+
+        return call.body
+    }
+
+    suspend fun login(username: String, password: String): LoginModel? {
+//        val call = HrisApi.retrofitService.getProfile(
+//            username,
+//            password
+//        )
+//
+//        if (call.isSuccess) {
+//            withContext(Dispatchers.IO) {
+//                hrisDao.updateProfile(call.user!!)
+//            }
+//        }
+//        return call
+
+
+        return safeApiCall {
+            HrisApi.retrofitService.getProfile(
+                userID = username,
+                password = password
+            )
+        }
     }
 
     suspend fun updateProfile(
@@ -36,63 +60,95 @@ class HrisRepository @Inject constructor(
         emailAddress: String,
         mobileNumber: String,
         landline: String?
-    ): ResponseModel {
+    ): ResponseModel? {
         return withContext(Dispatchers.IO) {
-            val call = HrisApi.retrofitService.updateProfile(
-                userData.value!!.userID,
-                firstName,
-                middleName,
-                lastName,
-                emailAddress,
-                mobileNumber,
-                landline
-            )
-
-            if (call.isSuccess) {
-                hrisDao.updateProfile(
-                    User(
-                        userData.value!!.userID,
-                        userData.value!!.idNumber,
-                        firstName,
-                        middleName,
-                        lastName,
-                        emailAddress,
-                        mobileNumber,
-                        landline
-                    )
+            val call = safeApiCall {
+                HrisApi.retrofitService.updateProfile(
+                    userData.value!!.userID,
+                    firstName,
+                    middleName,
+                    lastName,
+                    emailAddress,
+                    mobileNumber,
+                    landline
                 )
             }
 
+            if (call != null) {
+                if (call.isSuccess) {
+                    hrisDao.updateProfile(
+                        User(
+                            userData.value!!.userID,
+                            userData.value!!.idNumber,
+                            firstName,
+                            middleName,
+                            lastName,
+                            emailAddress,
+                            mobileNumber,
+                            landline
+                        )
+                    )
+                }
+            }
             call
         }
     }
 
-    suspend fun refreshTimeLogs(): TimeLogsModel =
+    suspend fun refreshTimeLogs(): TimeLogsModel? =
         withContext(Dispatchers.IO) {
-            val call = HrisApi.retrofitService.getTimeLogs(
-                userData.value!!.userID
-            )
-            if (call.isSuccess) {
+            val call = safeApiCall {
+                HrisApi.retrofitService.getTimeLogs(
+                    userData.value!!.userID
+                )
+            }
+
+            if (call?.isSuccess == true) {
                 hrisDao.updateTimeLogs(call.timeLogs!!)
             }
             call
         }
 
-    suspend fun addTimeLogs(type: String): ResponseModel =
+//    suspend fun refreshTimeLogs(): TimeLogsModel =
+//        withContext(Dispatchers.IO) {
+//            val call = HrisApi.retrofitService.getTimeLogs(
+//                userData.value!!.userID
+//            )
+//            if (call.isSuccess) {
+//                hrisDao.updateTimeLogs(call.timeLogs!!)
+//            }
+//            call
+//        }
+
+    suspend fun addTimeLogs(type: String): ResponseModel? =
         withContext(Dispatchers.IO) {
-            HrisApi.retrofitService.addTimeLogs(
-                userData.value!!.userID,
-                type
-            )
+            safeApiCall {
+                HrisApi.retrofitService.addTimeLogs(
+                    userData.value!!.userID,
+                    type
+                )
+            }
         }
 
-    suspend fun refreshLeaves(): LeavesModel =
+
+//    suspend fun addTimeLogs(type: String): ResponseModel =
+//        withContext(Dispatchers.IO) {
+//            HrisApi.retrofitService.addTimeLogs(
+//                userData.value!!.userID,
+//                type
+//            )
+//        }
+
+    suspend fun refreshLeaves(): LeavesModel? =
         withContext(Dispatchers.IO) {
-            val call = HrisApi.retrofitService.getLeaves(
-                userData.value!!.userID
-            )
-            if (call.isSuccess) {
-                hrisDao.updateLeaves(call.leaves)
+            val call = safeApiCall {
+                HrisApi.retrofitService.getLeaves(
+                    userData.value!!.userID
+                )
+            }
+            if (call != null) {
+                if (call.isSuccess) {
+                    hrisDao.updateLeaves(call.leaves)
+                }
             }
             call
         }
@@ -102,14 +158,16 @@ class HrisRepository @Inject constructor(
         time: String,
         dateFrom: String,
         dateTo: String?
-    ): ResponseModel =
+    ): ResponseModel? =
         withContext(Dispatchers.IO) {
-            HrisApi.retrofitService.fileLeave(
-                userData.value!!.userID,
-                type,
-                dateFrom,
-                dateTo,
-                time
-            )
+            safeApiCall {
+                HrisApi.retrofitService.fileLeave(
+                    userData.value!!.userID,
+                    type,
+                    dateFrom,
+                    dateTo,
+                    time
+                )
+            }
         }
 }

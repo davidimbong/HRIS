@@ -1,9 +1,11 @@
 package com.example.hris.ui.viewmodels.leaves
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.hris.R
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,23 +22,27 @@ class FileLeaveViewModel @Inject constructor(
     val isSuccess = MutableLiveData<Unit>()
     var type = ""
 
-    fun fileLeave(time: Int, dateFrom: String?, dateTo: String?) {
+    fun fileLeave(time: Int, dateFrom: String?, dateTo: String?, context: Context) {
         if (checkIfValid(time, dateFrom, dateTo)) {
             viewModelScope.launch {
                 loadingDialogState.value = true
                 val call = hrisRepository.fileLeave(
-                    type =  type,
+                    type = type,
                     time = time.toString(),
-                    dateFrom =  dateFrom!!,
+                    dateFrom = dateFrom!!,
                     dateTo = dateTo
                 )
 
-                if (call.isSuccess) {
-                    isSuccess.value = Unit
+                if (call != null) {
+                    if (call.isSuccess) {
+                        isSuccess.value = Unit
+                    } else {
+                        message.value = call.message!!
+                    }
+                    loadingDialogState.value = false
                 } else {
-                    message.value = call.message!!
+                    message.value = getApplication<Application>().getString(R.string.network_error)
                 }
-                loadingDialogState.value = false
             }
         }
     }
