@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.Window
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.errorMessage.observe(this) {
-            setErrorDialog(it)
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -79,10 +80,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             loadingDialog.dismiss()
         }
-    }
-
-    private fun setErrorDialog(message: String) {
-        builder.setMessage(message)
-        builder.show()
     }
 }

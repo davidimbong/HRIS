@@ -23,25 +23,17 @@ class LoginViewModel @Inject constructor(
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
-    fun userLogin(username: String, password: String, context: Context) {
+    fun userLogin(username: String, password: String) {
         viewModelScope.launch {
             loadingDialogState.value = true
-            try {
-                val loginResponse = hrisRepository.login(username = username, password = password)
-                loadingDialogState.value = false
+            val loginResponse = hrisRepository.login(username = username, password = password)
 
-                if (loginResponse.isSuccess) {
-                    liveDataSuccess.value = Unit
-                } else {
-                    message.value = loginResponse.message!!
-                }
-            } catch (networkError: IOException) {
-                message.value = context.getString(R.string.network_error)
-                loadingDialogState.value = false
+            if (loginResponse.isSuccess) {
+                liveDataSuccess.value = Unit
+            } else {
+                message.value = loginResponse.message!!
             }
-            catch (networkError: TimeoutException){
-                loadingDialogState.value = false
-            }
+            loadingDialogState.value = false
         }
     }
 }

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Window
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hris.R
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.txtUserID.text.toString()
             val password = binding.txtPassword.text.toString()
 
-            viewModel.userLogin(username, password, this)
+            viewModel.userLogin(username, password)
         }
 
         viewModel.liveDataSuccess.observe(this) {
@@ -55,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.message.observe(this) {
-            setErrorDialog(it)
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -65,10 +66,5 @@ class LoginActivity : AppCompatActivity() {
         } else {
             loadingDialog.dismiss()
         }
-    }
-
-    private fun setErrorDialog(message: String) {
-        builder.setMessage(message)
-        builder.show()
     }
 }
