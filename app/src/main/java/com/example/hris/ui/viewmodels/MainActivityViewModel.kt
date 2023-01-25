@@ -12,5 +12,6 @@ class MainActivityViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val apiBool = MutableLiveData<Boolean>()
+    val errorMessage = MutableLiveData<String>()
 
 }

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -80,7 +79,7 @@ class FileLeaveFragment : Fragment() {
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            mainViewModel.errorMessage.value = it
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
@@ -88,7 +87,6 @@ class FileLeaveFragment : Fragment() {
         }
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Leave successfully filed", Toast.LENGTH_SHORT).show()
             val action =
                 FileLeaveFragmentDirections.actionFileLeaveFragmentToFileLeaveSuccessFragment(
                     Leaves(
