@@ -39,7 +39,7 @@ class LeavesFragment : Fragment() {
             findNavController().navigate(LeavesFragmentDirections.actionLeavesFragmentToFileLeaveFragment())
         }
 
-        viewModel.callLeaves()
+        viewModel.callLeaves(requireContext())
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {
             mainViewModel.apiBool.value = it

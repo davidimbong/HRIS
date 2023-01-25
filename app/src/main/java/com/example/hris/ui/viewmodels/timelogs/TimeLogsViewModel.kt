@@ -1,9 +1,11 @@
 package com.example.hris.ui.viewmodels.timelogs
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.hris.R
 import com.example.hris.model.TimeLogs
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,15 +23,19 @@ class TimeLogsViewModel @Inject constructor(
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
-    fun callTimeLogs() {
+    fun callTimeLogs(context: Context) {
         viewModelScope.launch {
             loadingDialogState.value = true
             val call = hrisRepository.refreshTimeLogs()
 
-            if (call.isSuccess) {
-                timeLogs.value = call.timeLogs!!
+            if (call != null) {
+                if (call.isSuccess) {
+                    timeLogs.value = call.timeLogs!!
+                } else {
+                    message.value = call.message!!
+                }
             } else {
-                message.value = call.message!!
+                message.value = context.getString(R.string.network_error)
             }
 
             loadingDialogState.value = false
