@@ -1,6 +1,5 @@
 package com.example.hris.ui
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.Window
@@ -27,14 +26,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val builder: AlertDialog.Builder by lazy {
-        AlertDialog.Builder(this).apply {
-            this.setPositiveButton(R.string.ok) { dialog, _ ->
-                dialog.dismiss()
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,8 +48,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
+        navController.addOnDestinationChangedListener{_, destination, _ ->
+            when(destination.id) {
                 R.id.profileFragment -> navBar.menu.getItem(2).isChecked = true
                 R.id.leavesFragment -> navBar.menu.getItem(1).isChecked = true
                 R.id.timeLogsFragment -> navBar.menu.getItem(0).isChecked = true
@@ -68,14 +59,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.apiBool.observe(this) {
             setLoadingDialog(it)
         }
+<<<<<<< HEAD
 
         viewModel.errorMessage.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+=======
+>>>>>>> parent of ce0acb3 (Issue: Change toasts to AlertDialogBox)
     }
 
-    private fun setLoadingDialog(isLoading: Boolean) {
-        if (isLoading) {
+    private fun setLoadingDialog(loading: Boolean) {
+        if (loading) {
             loadingDialog.show()
         } else {
             loadingDialog.dismiss()

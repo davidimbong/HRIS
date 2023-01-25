@@ -12,7 +12,7 @@
     <string name="in">IN</string>
     <string name="out">OUT</string>
     <string name="type">Type</string>
-    <string name="you_have_successfully_save_the_following_details">You have successfully saved the following details:</string>
+    <string name="you_have_successfully_save_the_following_details">You have successfully save the following details:</string>
     <string name="time">Time</string>
     <string name="time_in">Time In</string>
     <string name="ok">OK</string>
@@ -62,16 +62,12 @@
     <string name="vacation_leave">Vacation Leave</string>
 
     <!--  update profile error messages  -->
-    <string name="first_name_error"> First name can not be empty or contain special characters and/or numbers. </string>
-    <string name="last_name_error"> Last name can not be empty or contain special characters and/or numbers. </string>
-    <string name="middle_name_error"> Middle name can not contain special characters and/or numbers. </string>
-    <string name="mobile_number_error"> Invalid mobile phone number. </string>
-    <string name="email_address_error"> Invalid email address. </string>
-    <string name="landline_number_error"> Invalid landline number, please use this format
-        \n (2 digit Area code + 8 + 7 digit number) </string>
+    <string name="first_name_error"> First name can not be empty or contain special characters and/or numbers </string>
+    <string name="last_name_error"> Last name can not be empty or contain special characters and/or numbers </string>
+    <string name="middle_name_error"> Middle name can not contain special characters and/or numbers </string>
+    <string name="mobile_number_error"> Invalid mobile phone number </string>
+    <string name="email_address_error"> Invalid email address format </string>
+    <string name="landline_number_error"> Invalid landline number (2 digit Area code + 8 + 7 digit number) </string>
 
-    <!--  API Errors  -->
-    <string name="network_error"> Error connecting to the server, please check your internet connection
-        or try again later.</string>
-    <string name="timeout_error"> Connection timed out, please check your internet connection or try again later.</string>
+
 </resources>

@@ -88,6 +88,7 @@ class FileLeaveFragment : Fragment() {
         }
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Leave successfully filed", Toast.LENGTH_SHORT).show()
             val action =
                 FileLeaveFragmentDirections.actionFileLeaveFragmentToFileLeaveSuccessFragment(
                     Leaves(
