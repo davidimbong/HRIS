@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
-    fun userLogin(username: String, password: String, context: Context) {
+    fun userLogin(username: String, password: String) {
         viewModelScope.launch {
             loadingDialogState.value = true
             try {
@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
                     message.value = loginResponse.message!!
                 }
             } catch (networkError: IOException) {
-                message.value = context.getString(R.string.network_error)
+                message.value = getApplication<Application>().getString(R.string.network_error)
                 loadingDialogState.value = false
             }
             catch (networkError: TimeoutException){

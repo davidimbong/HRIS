@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.txtUserID.text.toString()
             val password = binding.txtPassword.text.toString()
 
-            viewModel.userLogin(username, password, this)
+            viewModel.userLogin(username, password)
         }
 
         viewModel.liveDataSuccess.observe(this) {
