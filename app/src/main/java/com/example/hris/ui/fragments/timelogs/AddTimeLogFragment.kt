@@ -36,7 +36,6 @@ class AddTimeLogFragment : Fragment() {
 
             viewModel.addTimeLogs(
                 type.toString(),
-                requireContext()
             )
         }
 

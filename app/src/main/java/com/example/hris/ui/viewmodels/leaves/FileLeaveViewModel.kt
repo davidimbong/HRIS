@@ -22,7 +22,7 @@ class FileLeaveViewModel @Inject constructor(
     val isSuccess = MutableLiveData<Unit>()
     var type = ""
 
-    fun fileLeave(time: Int, dateFrom: String?, dateTo: String?, context: Context) {
+    fun fileLeave(time: Int, dateFrom: String?, dateTo: String?) {
         if (checkIfValid(time, dateFrom, dateTo)) {
             viewModelScope.launch {
                 loadingDialogState.value = true

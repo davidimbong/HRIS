@@ -15,7 +15,6 @@ class HrisRepository @Inject constructor(
     private val hrisDao: HrisDao
 ) {
     val userData = hrisDao.getProfile()
-    val timeLogs = hrisDao.getTimeLogs()
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): T? {
         val call = try {
@@ -32,19 +31,6 @@ class HrisRepository @Inject constructor(
     }
 
     suspend fun login(username: String, password: String): LoginModel? {
-//        val call = HrisApi.retrofitService.getProfile(
-//            username,
-//            password
-//        )
-//
-//        if (call.isSuccess) {
-//            withContext(Dispatchers.IO) {
-//                hrisDao.updateProfile(call.user!!)
-//            }
-//        }
-//        return call
-
-
         return safeApiCall {
             HrisApi.retrofitService.getProfile(
                 userID = username,
@@ -108,17 +94,6 @@ class HrisRepository @Inject constructor(
             call
         }
 
-//    suspend fun refreshTimeLogs(): TimeLogsModel =
-//        withContext(Dispatchers.IO) {
-//            val call = HrisApi.retrofitService.getTimeLogs(
-//                userData.value!!.userID
-//            )
-//            if (call.isSuccess) {
-//                hrisDao.updateTimeLogs(call.timeLogs!!)
-//            }
-//            call
-//        }
-
     suspend fun addTimeLogs(type: String): ResponseModel? =
         withContext(Dispatchers.IO) {
             safeApiCall {
@@ -128,15 +103,6 @@ class HrisRepository @Inject constructor(
                 )
             }
         }
-
-
-//    suspend fun addTimeLogs(type: String): ResponseModel =
-//        withContext(Dispatchers.IO) {
-//            HrisApi.retrofitService.addTimeLogs(
-//                userData.value!!.userID,
-//                type
-//            )
-//        }
 
     suspend fun refreshLeaves(): LeavesModel? =
         withContext(Dispatchers.IO) {

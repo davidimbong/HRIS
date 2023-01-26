@@ -38,7 +38,6 @@ interface HrisApiService {
     suspend fun getProfile(
         @Field("userID") userID: String,
         @Field("password") password: String
-//    ): LoginModel
     ): Response<LoginModel>
 
 
@@ -59,7 +58,6 @@ interface HrisApiService {
     suspend fun getTimeLogs(
         @Field("userID") userID: String
     ): Response<TimeLogsModel>
-//    ): TimeLogsModel
 
     @FormUrlEncoded
     @POST("AppTrainingAddTimeLog.htm")

@@ -71,7 +71,6 @@ class FileLeaveFragment : Fragment() {
                 time = binding.Spinner.selectedItemPosition + 1,
                 dateFrom = startDate,
                 dateTo = endDate,
-                context = requireContext()
             )
         }
 

@@ -36,7 +36,7 @@ class TimeLogsFragment : Fragment() {
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
-            viewModel.callTimeLogs(requireContext())
+            viewModel.callTimeLogs()
         }
 
         viewModel.loadingDialogState.observe(viewLifecycleOwner) {

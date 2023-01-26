@@ -9,7 +9,7 @@ data class SimpleResponse<T>(
 ) {
 
     companion object {
-        fun <T> success(data: Response<T>) : SimpleResponse<T> {
+        fun <T> success(data: Response<T>): SimpleResponse<T> {
             return SimpleResponse(
                 status = Status.Success,
                 data = data,

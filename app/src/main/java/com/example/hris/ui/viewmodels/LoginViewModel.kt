@@ -41,23 +41,6 @@ class LoginViewModel @Inject constructor(
 
             loadingDialogState.value = false
 
-//            loadingDialogState.value = true
-//            try {
-//            val call = hrisRepository.login(username = username, password = password)
-//            if (call.body.isSuccess) {
-//                liveDataSuccess.value = Unit
-//            } else {
-//                message.value = call.body.message!!
-//            }
-//            loadingDialogState.value = false
-//            } catch (networkError: IOException) {
-//                message.value = context.getString(R.string.network_error)
-//                loadingDialogState.value = false
-//            }
-//            catch (networkError: TimeoutException){
-//                message.value = context.getString(R.string.timeout_error)
-//                loadingDialogState.value = false
-//            }
         }
     }
 }

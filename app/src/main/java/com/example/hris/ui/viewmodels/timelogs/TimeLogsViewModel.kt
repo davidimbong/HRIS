@@ -23,7 +23,7 @@ class TimeLogsViewModel @Inject constructor(
     val loadingDialogState = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
-    fun callTimeLogs(context: Context) {
+    fun callTimeLogs() {
         viewModelScope.launch {
             loadingDialogState.value = true
             val call = hrisRepository.refreshTimeLogs()

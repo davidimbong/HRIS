@@ -45,7 +45,7 @@ class LeavesViewModel @Inject constructor(
         }
     }
 
-    fun callLeaves(context: Context) {
+    fun callLeaves() {
         viewModelScope.launch {
             loadingDialogState.value = true
             val call = hrisRepository.refreshLeaves()

@@ -22,7 +22,7 @@ class AddTimeLogsViewModel @Inject constructor(
     val liveDataSuccess = MutableLiveData<Unit>()
     val message = MutableLiveData<String>()
 
-    fun addTimeLogs(type: String, context: Context) {
+    fun addTimeLogs(type: String) {
         viewModelScope.launch {
             loadingDialogState.value = true
             val call = hrisRepository.addTimeLogs(
