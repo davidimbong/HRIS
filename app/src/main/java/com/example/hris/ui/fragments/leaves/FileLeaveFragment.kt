@@ -68,9 +68,9 @@ class FileLeaveFragment : Fragment() {
 
         binding.fileLeaveToolbar.btnDone.setOnClickListener {
             viewModel.fileLeave(
-                binding.Spinner.selectedItemPosition + 1,
-                startDate,
-                endDate
+                time = binding.Spinner.selectedItemPosition + 1,
+                dateFrom = startDate,
+                dateTo = endDate,
             )
         }
 

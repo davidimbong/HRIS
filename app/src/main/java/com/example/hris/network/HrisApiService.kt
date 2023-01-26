@@ -8,6 +8,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Field
@@ -37,7 +38,7 @@ interface HrisApiService {
     suspend fun getProfile(
         @Field("userID") userID: String,
         @Field("password") password: String
-    ): LoginModel
+    ): Response<LoginModel>
 
 
     @FormUrlEncoded
@@ -50,26 +51,26 @@ interface HrisApiService {
         @Field("emailAddress") emailAddress: String,
         @Field("mobileNumber") mobileNumber: String,
         @Field("landline") landline: String?
-    ): ResponseModel
+    ): Response<ResponseModel>
 
     @FormUrlEncoded
     @POST("AppTrainingGetTimeLogs.htm")
     suspend fun getTimeLogs(
         @Field("userID") userID: String
-    ): TimeLogsModel
+    ): Response<TimeLogsModel>
 
     @FormUrlEncoded
     @POST("AppTrainingAddTimeLog.htm")
     suspend fun addTimeLogs(
         @Field("userID") userID: String,
         @Field("type") type: String
-    ): ResponseModel
+    ): Response<ResponseModel>
 
     @FormUrlEncoded
     @POST("AppTrainingGetLeaves.htm")
     suspend fun getLeaves(
         @Field("userID") userID: String
-    ): LeavesModel
+    ): Response<LeavesModel>
 
     @FormUrlEncoded
     @POST("AppTrainingAddLeave.htm")
@@ -79,7 +80,7 @@ interface HrisApiService {
         @Field("dateFrom") dateFrom: String,
         @Field("dateTo") dateTo: String?,
         @Field("time") time: String
-    ): ResponseModel
+    ): Response<ResponseModel>
 }
 
 object HrisApi {

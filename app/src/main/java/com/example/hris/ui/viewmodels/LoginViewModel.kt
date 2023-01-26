@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hris.R
+import com.example.hris.network.SimpleResponse
 import com.example.hris.repository.HrisRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,22 +27,20 @@ class LoginViewModel @Inject constructor(
     fun userLogin(username: String, password: String) {
         viewModelScope.launch {
             loadingDialogState.value = true
-            try {
-                val loginResponse = hrisRepository.login(username = username, password = password)
-                loadingDialogState.value = false
+            val call = hrisRepository.login(username = username, password = password)
 
-                if (loginResponse.isSuccess) {
+            if (call != null) {
+                if (call.isSuccess) {
                     liveDataSuccess.value = Unit
                 } else {
-                    message.value = loginResponse.message!!
+                    message.value = call.message!!
                 }
-            } catch (networkError: IOException) {
+            } else {
                 message.value = getApplication<Application>().getString(R.string.network_error)
-                loadingDialogState.value = false
             }
-            catch (networkError: TimeoutException){
-                loadingDialogState.value = false
-            }
+
+            loadingDialogState.value = false
+
         }
     }
 }
