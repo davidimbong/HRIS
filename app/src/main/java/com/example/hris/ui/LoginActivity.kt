@@ -1,10 +1,10 @@
 package com.example.hris.ui
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Window
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hris.R
@@ -22,6 +22,14 @@ class LoginActivity : AppCompatActivity() {
             this.requestWindowFeature(Window.FEATURE_NO_TITLE)
             this.setCancelable(false)
             this.setContentView(R.layout.api_calling_dialog)
+        }
+    }
+
+    private val builder: AlertDialog.Builder by lazy {
+        AlertDialog.Builder(this).apply {
+            this.setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
         }
     }
 
@@ -47,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.message.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            setErrorDialog(it)
         }
     }
 
@@ -57,5 +65,10 @@ class LoginActivity : AppCompatActivity() {
         } else {
             loadingDialog.dismiss()
         }
+    }
+
+    private fun setErrorDialog(message: String) {
+        builder.setMessage(message)
+        builder.show()
     }
 }

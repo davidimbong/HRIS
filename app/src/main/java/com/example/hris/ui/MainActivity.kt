@@ -1,5 +1,6 @@
 package com.example.hris.ui
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.Window
@@ -25,6 +26,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val builder: AlertDialog.Builder by lazy {
+        AlertDialog.Builder(this).apply {
+            this.setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -47,8 +56,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        navController.addOnDestinationChangedListener{_, destination, _ ->
-            when(destination.id) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
                 R.id.profileFragment -> navBar.menu.getItem(2).isChecked = true
                 R.id.leavesFragment -> navBar.menu.getItem(1).isChecked = true
                 R.id.timeLogsFragment -> navBar.menu.getItem(0).isChecked = true
@@ -58,13 +67,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.apiBool.observe(this) {
             setLoadingDialog(it)
         }
+
+        viewModel.errorMessage.observe(this) {
+            setErrorDialog(it)
+        }
     }
 
-    private fun setLoadingDialog(loading: Boolean) {
-        if (loading) {
+    private fun setLoadingDialog(isLoading: Boolean) {
+        if (isLoading) {
             loadingDialog.show()
         } else {
             loadingDialog.dismiss()
         }
+    }
+
+    private fun setErrorDialog(message: String) {
+        builder.setMessage(message)
+        builder.show()
     }
 }

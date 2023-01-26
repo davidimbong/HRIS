@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -49,11 +48,10 @@ class AddTimeLogFragment : Fragment() {
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            mainViewModel.errorMessage.value = it
         }
 
         viewModel.liveDataSuccess.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Time log successfully added", Toast.LENGTH_SHORT).show()
             val action =
                 AddTimeLogFragmentDirections.actionAddTimeLogsFragmentToAddTimeLogSuccessFragment(
                     binding.Spinner.selectedItem.toString()
