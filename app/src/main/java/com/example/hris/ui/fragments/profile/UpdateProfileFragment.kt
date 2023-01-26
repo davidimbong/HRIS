@@ -43,7 +43,6 @@ class UpdateProfileFragment : Fragment() {
                 emailAddress = binding.txtEmail.text.toString(),
                 mobileNumber = binding.txtMobileNumber.text.toString().convertToLocalPhone(),
                 landline = binding.txtLandLine.text.toString().convertToLocalLandline(),
-                context = requireContext()
             )
         }
 
